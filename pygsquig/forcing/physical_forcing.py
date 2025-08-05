@@ -422,7 +422,7 @@ class ConvectivePlumesForcing(PhysicalForcing):
 
     def _initialize_plumes(self, L: float, key: Optional[jax.random.PRNGKey]):
         """Initialize plume positions."""
-        self.plume_data: list[list[float]] = []
+        self.plume_data = []
 
         if self.randomize_positions and key is not None:
             # Random positions

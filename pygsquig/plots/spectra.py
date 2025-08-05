@@ -94,9 +94,9 @@ def plot_energy_spectrum_with_analysis(
     if output_path:
         fig.savefig(output_path, dpi=PlotStyle.DPI, bbox_inches="tight")
         plt.close(fig)
-        return None, measured_slope
+        return None, float(measured_slope)
 
-    return fig, measured_slope
+    return fig, float(measured_slope)
 
 
 def plot_spectrum_evolution(

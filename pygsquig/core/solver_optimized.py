@@ -6,7 +6,7 @@ JAX-specific optimizations for better performance.
 """
 
 from functools import partial
-from typing import Callable, Optional
+from typing import Any, Callable, Optional
 
 import jax
 import jax.numpy as jnp
@@ -198,7 +198,7 @@ class gSQGSolverOptimized:
 
         return {"theta_hat": theta_hat_final, "time": time_final, "step": state["step"] + n_steps}
 
-    def compute_velocity(self, theta_hat: jax.Array) -> tuple[jax.Array, jax.Array]:
+    def compute_velocity(self, theta_hat: jax.Array) -> tuple[Any, Any]:
         """Compute velocity field from θ."""
         return compute_velocity_from_theta(theta_hat, self.grid, self.alpha)
 

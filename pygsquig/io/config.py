@@ -7,7 +7,7 @@ Configuration files are written in YAML and converted to these dataclasses.
 
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Optional, Union
+from typing import Any, Optional, Union
 
 import numpy as np
 import yaml
@@ -417,7 +417,7 @@ class RunConfig:
         with open(path, "w") as f:
             yaml.dump(data, f, default_flow_style=False, sort_keys=False)
 
-    def to_dict(self) -> dict:
+    def to_dict(self) -> dict[Any, Any]:
         """Convert configuration to dictionary.
 
         Returns:

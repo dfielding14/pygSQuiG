@@ -281,6 +281,9 @@ def compute_time_averaged_spectrum(
             E_k_sum += E_k
 
     # Average
+    if E_k_sum is None:
+        logger.error("No valid theta fields found in selected files")
+        return None, None
     E_k_avg = E_k_sum / len(selected_files)
 
     return k_centers, E_k_avg

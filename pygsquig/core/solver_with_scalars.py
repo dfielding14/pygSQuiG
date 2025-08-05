@@ -64,6 +64,8 @@ class gSQGSolverWithScalars(gSQGSolver):
         scalar_evolver: Optional MultiSpeciesEvolver for passive scalars
     """
 
+    scalar_evolver: Optional[MultiSpeciesEvolver]
+
     def __init__(
         self,
         grid,
@@ -169,7 +171,11 @@ class gSQGSolverWithScalars(gSQGSolver):
             u, v = self.compute_velocity(new_base_state["theta_hat"])
 
             # Step all scalars
-            new_scalar_state = self.scalar_evolver.step(extended_state.scalar_state, dt, u, v)
+            new_scalar_state = (
+                self.scalar_evolver.step(extended_state.scalar_state, dt, u, v)
+                if extended_state.scalar_state is not None
+                else None
+            )
         else:
             new_scalar_state = extended_state.scalar_state
 

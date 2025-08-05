@@ -133,7 +133,7 @@ def compute_timestep(
     nu_p: float = 0.0,
     p: int = 8,
     current_dt: Optional[float] = None,
-) -> tuple[float, dict[str, float]]:
+) -> tuple[float, dict[str, Any]]:
     """Compute adaptive timestep based on CFL conditions.
 
     Args:
@@ -224,7 +224,7 @@ class AdaptiveTimestepper:
 
     def compute_timestep(
         self, state: dict[str, Any], u: Array, v: Array, nu_p: float = 0.0, p: int = 8
-    ) -> tuple[float, dict[str, float]]:
+    ) -> tuple[float, dict[str, Any]]:
         """Compute timestep for current state.
 
         Args:

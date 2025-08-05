@@ -229,7 +229,12 @@ class MultiGPUSolver:
         theta_hat_ensemble = self.init_ensemble(keys, (self.grid.N, self.grid.N))
 
         # Storage for results
-        results = {"times": [], "mean_energy": [], "std_energy": [], "states": []}
+        results: dict[str, list[Any]] = {
+            "times": [],
+            "mean_energy": [],
+            "std_energy": [],
+            "states": [],
+        }
 
         # Time evolution
         t = 0.0

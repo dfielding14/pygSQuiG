@@ -183,7 +183,7 @@ class AdaptivegSQGSolver:
             Dictionary with results and statistics
         """
         # Initialize storage
-        results = {"times": [], "states": [], "dt_history": [], "diagnostics": []}
+        results: dict[str, Any] = {"times": [], "states": [], "dt_history": [], "diagnostics": []}
 
         # Timing
         wall_time_start = pytime.perf_counter()

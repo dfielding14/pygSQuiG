@@ -284,16 +284,16 @@ class MaskForcing:
             r_inner = self.inner_radius * L / 2
             r_outer = self.outer_radius * L / 2
 
-            self._mask = (r >= r_inner) & (r <= r_outer)
-            self._mask = self._mask.astype(float)
+            mask = (r >= r_inner) & (r <= r_outer)
+            self._mask = mask.astype(float)
 
         elif self.mask_type == "rectangular":
             # Rectangular mask
             x_min, x_max = self.x_bounds[0] * L, self.x_bounds[1] * L
             y_min, y_max = self.y_bounds[0] * L, self.y_bounds[1] * L
 
-            self._mask = (x >= x_min) & (x <= x_max) & (y >= y_min) & (y <= y_max)
-            self._mask = self._mask.astype(float)
+            mask = (x >= x_min) & (x <= x_max) & (y >= y_min) & (y <= y_max)
+            self._mask = mask.astype(float)
 
         elif self.mask_type == "custom":
             if self.custom_mask is None:

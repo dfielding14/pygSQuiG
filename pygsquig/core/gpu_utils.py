@@ -307,7 +307,7 @@ class GPUOptimizedSolver:
         logger.warning("Full multi-GPU domain decomposition not yet implemented")
         return self._step_single_gpu(state, dt, **kwargs)
 
-    def get_memory_usage(self) -> dict[str, float]:
+    def get_memory_usage(self) -> dict[str, Any]:
         """Get current GPU memory usage.
 
         Returns:
@@ -344,7 +344,7 @@ class GPUOptimizedSolver:
 
 
 def benchmark_gpu_performance(
-    grid_sizes: list[int] = None, device_type: str = "auto"
+    grid_sizes: Optional[list[int]] = None, device_type: str = "auto"
 ) -> dict[str, Any]:
     """Benchmark solver performance on different grid sizes.
 

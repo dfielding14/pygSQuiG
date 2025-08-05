@@ -19,7 +19,7 @@ from ..core.grid import Grid
 from .config import RunConfig
 
 
-def _get_git_info() -> dict[str, str]:
+def _get_git_info() -> dict[str, Any]:
     """Get current git commit hash and status."""
     try:
         commit = (

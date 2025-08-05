@@ -5,7 +5,7 @@ This module provides the core solver class that orchestrates the simulation
 of gSQG turbulence using spectral methods.
 """
 
-from typing import Callable, Optional
+from typing import Any, Callable, Optional
 
 import jax
 import jax.numpy as jnp
@@ -123,7 +123,7 @@ class gSQGSolver:
 
         return {"theta_hat": theta_hat, "time": jnp.array(0.0), "step": jnp.array(0)}
 
-    def compute_velocity(self, theta_hat: jax.Array) -> tuple[jax.Array, jax.Array]:
+    def compute_velocity(self, theta_hat: jax.Array) -> tuple[Any, Any]:
         """
         Compute velocity field from θ.
 
