@@ -294,7 +294,7 @@ class GPUOptimizedSolver:
         # Perform step
         new_state = self.base_solver.step(state_device, dt, **kwargs)
 
-        return new_state
+        return dict(new_state)
 
     def _step_multi_gpu(self, state: dict[str, Any], dt: float, **kwargs) -> dict[str, Any]:
         """Multi-GPU parallel step."""

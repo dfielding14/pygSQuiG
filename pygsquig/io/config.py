@@ -437,7 +437,7 @@ class RunConfig:
                 }
             return d
 
-        return clean_dict(data)
+        return dict(clean_dict(data))
 
 
 def load_config(path: Union[str, Path]) -> RunConfig:

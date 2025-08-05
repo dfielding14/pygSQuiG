@@ -56,7 +56,7 @@ def compute_scalar_variance_spectrum(
     spectrum /= k_edges[1:] - k_edges[:-1]
 
     # Normalize by domain size
-    spectrum = spectrum * (grid.L / (2 * np.pi)) ** 2
+    spectrum *= (grid.L / (2 * np.pi)) ** 2
 
     return k_bins, spectrum
 

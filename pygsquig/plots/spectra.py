@@ -126,7 +126,7 @@ def plot_spectrum_evolution(
     times = sorted(spectra_data.keys())
 
     # Create colormap
-    colors = plt.cm.viridis(np.linspace(0, 1, len(times)))
+    colors = plt.cm.viridis(np.linspace(0, 1, len(times)))  # type: ignore[attr-defined]
 
     for i, t in enumerate(times):
         k, E_k = spectra_data[t]
@@ -194,7 +194,11 @@ def plot_compensated_spectrum(
 
     # Add horizontal line at expected plateau level
     ax.axhline(
-        np.median(E_comp[20:60]), color="r", linestyle="--", alpha=0.5, label="Expected plateau"
+        float(np.median(E_comp[20:60])),
+        color="r",
+        linestyle="--",
+        alpha=0.5,
+        label="Expected plateau",
     )
     ax.legend()
 

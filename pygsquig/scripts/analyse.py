@@ -200,7 +200,7 @@ def plot_field_snapshot(
 
 def compute_time_averaged_spectrum(
     field_dir: Path, start_time: Optional[float] = None, end_time: Optional[float] = None
-) -> tuple[np.ndarray, np.ndarray]:
+) -> tuple[Optional[np.ndarray], Optional[np.ndarray]]:
     """Compute time-averaged energy spectrum from multiple snapshots.
 
     Args:

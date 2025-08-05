@@ -46,12 +46,15 @@ def plot_field_slice(
         figsize = PlotStyle.FIGSIZE_SINGLE
 
     # Create figure if needed
+    fig: Optional[plt.Figure]
     if ax is None:
         fig, ax = plt.subplots(figsize=figsize)
         return_fig = True
     else:
-        fig = ax.get_figure()
+        fig = ax.get_figure()  # type: ignore[assignment]
         return_fig = False
+        if fig is None:
+            fig, _ = plt.subplots(figsize=figsize)
 
     # Determine color scale
     if vmin is None and vmax is None:
