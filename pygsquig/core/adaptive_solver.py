@@ -172,6 +172,8 @@ class AdaptivegSQGSolver:
         damping: Optional[Callable] = None,
         save_interval: Optional[float] = None,
         callback: Optional[Callable] = None,
+        max_steps: int = 100000,
+        min_progress_rate: float = 1e-6,
         **kwargs,
     ) -> dict[str, Any]:
         """Evolve system to final time with adaptive stepping.
@@ -183,6 +185,8 @@ class AdaptivegSQGSolver:
             damping: Optional damping function
             save_interval: Time interval for saving states
             callback: Optional callback function(state, info)
+            max_steps: Maximum number of steps allowed
+            min_progress_rate: Minimum progress rate (simulation time / wall time)
             **kwargs: Additional arguments
 
         Returns:
@@ -193,6 +197,11 @@ class AdaptivegSQGSolver:
 
         # Timing
         wall_time_start = pytime.perf_counter()
+        initial_time = state["time"]
+
+        # Progress tracking
+        last_progress_check = wall_time_start
+        progress_check_interval = 1.0  # Check progress every second
 
         # Save initial state
         if save_interval is not None:
@@ -205,11 +214,33 @@ class AdaptivegSQGSolver:
         # Main evolution loop
         current_state = state
         step_count = 0
+        last_dt = None
 
         if self.verbose:
             print(f"Evolving from t={state['time']} to t={t_final}")
 
         while current_state["time"] < t_final:
+            # Check maximum steps
+            if step_count >= max_steps:
+                raise RuntimeError(
+                    f"Maximum steps ({max_steps}) reached. "
+                    f"Current time: {current_state['time']:.6f}, "
+                    f"Target: {t_final:.6f}, "
+                    f"Last dt: {last_dt if last_dt is not None else 'N/A'}"
+                )
+
+            # Check progress rate periodically
+            current_wall_time = pytime.perf_counter()
+            if current_wall_time - last_progress_check > progress_check_interval:
+                elapsed = current_wall_time - wall_time_start
+                sim_progress = current_state["time"] - initial_time
+                if elapsed > 0 and sim_progress / elapsed < min_progress_rate:
+                    raise RuntimeError(
+                        f"Progress too slow. Rate: {sim_progress/elapsed:.2e} < {min_progress_rate:.2e}. "
+                        f"Simulated {sim_progress:.6f} in {elapsed:.1f}s"
+                    )
+                last_progress_check = current_wall_time
+
             # Compute maximum allowed timestep
             dt_max = t_final - current_state["time"]
 
@@ -232,6 +263,7 @@ class AdaptivegSQGSolver:
             # Update state
             current_state = new_state
             step_count += 1
+            last_dt = step_info["dt_used"]
 
             # Save if needed
             if save_interval is not None and current_state["time"] >= next_save_time:

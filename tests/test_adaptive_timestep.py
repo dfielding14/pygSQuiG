@@ -344,8 +344,46 @@ class TestAdaptiveSolver:
 
     def test_evolve_to_target_time(self):
         """Test evolution to target time."""
-        # Skip due to hanging issue - adaptive timestep logic needs review
-        pytest.skip("Adaptive timestep evolve method needs debugging")
+        # Use more conservative parameters to avoid hanging
+        cfl_config = CFLConfig(
+            cfl_safety=0.3,  # More conservative
+            dt_max=0.01,
+            dt_min=1e-6,  # Larger minimum to prevent extreme small steps
+            target_cfl=0.3
+        )
+
+        solver = AdaptivegSQGSolver(
+            self.grid, 
+            alpha=1.0, 
+            nu_p=1e-2,  # Stronger dissipation for stability
+            p=2,  # Lower order for less restrictive CFL
+            cfl_config=cfl_config, 
+            verbose=False
+        )
+
+        # Use smoother initial condition
+        x, y = self.grid.x, self.grid.y
+        L = self.grid.L
+        # Smooth sinusoidal initial condition
+        theta0 = np.sin(2 * np.pi * x / L) * np.cos(2 * np.pi * y / L)
+        state = solver.initialize(theta0=theta0)
+        
+        t_final = 0.05  # Shorter time for testing
+        
+        # Add stricter limits to prevent hanging
+        results = solver.evolve(
+            state, 
+            t_final, 
+            save_interval=0.025,
+            max_steps=10000,  # Limit steps
+            min_progress_rate=1e-4  # Require reasonable progress
+        )
+
+        assert results["final_state"]["time"] >= t_final - 1e-10
+        assert len(results["times"]) >= 2  # At least initial and one save
+        assert "statistics" in results
+        assert results["statistics"]["total_steps"] > 0
+        assert results["statistics"]["total_steps"] < 10000  # Didn't hit limit
 
     def test_adaptive_vs_fixed_comparison(self):
         """Compare adaptive vs fixed timestep solver."""

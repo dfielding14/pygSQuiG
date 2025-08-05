@@ -9,6 +9,7 @@ import tempfile
 from pathlib import Path
 
 import h5py
+import numpy as np
 import pytest
 import xarray as xr
 import yaml
@@ -147,11 +148,60 @@ class TestRunWithScalars:
                 assert "dye_variance" in f
 
     def test_scalar_source_evolution(self, scalar_config_dict):
-        """Test that scalar sources are included in output."""
-        # Skip the test for now due to stability issues with exponential sources
-        # The scalar source functionality works but numerical stability with
-        # strong turbulence makes this test unreliable
-        pytest.skip("Scalar source evolution test needs more stable configuration")
+        """Test that scalar sources work correctly with zero base flow."""
+        runner = CliRunner()
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            config_path = Path(tmpdir) / "config.yml"
+
+            # Configure with exponential growth source and zero base flow
+            scalar_config_dict["scalars"]["species"] = [
+                {
+                    "name": "growing",
+                    "kappa": 0.1,  # Strong diffusion for stability
+                    "source": {"type": "exponential", "parameters": {"rate": 0.01}},  # Very small growth rate
+                    "initial_condition": "uniform",
+                    "initial_params": {"value": 1.0},
+                }
+            ]
+            # Use zero initial condition for base flow to avoid turbulence
+            scalar_config_dict["initial_condition"] = {"type": "zero"}
+            # Conservative timestep
+            scalar_config_dict["solver"]["time_integration"]["dt"] = 0.001
+            scalar_config_dict["solver"]["dissipation"]["nu_p"] = 0.1  # Very strong dissipation
+            scalar_config_dict["simulation"]["t_end"] = 0.1
+            scalar_config_dict["simulation"]["output_interval"] = 0.1
+
+            with open(config_path, "w") as f:
+                yaml.dump(scalar_config_dict, f)
+
+            output_dir = Path(tmpdir) / "output"
+
+            result = runner.invoke(main, [str(config_path), "--output-dir", str(output_dir)])
+
+            # Should run successfully
+            assert result.exit_code == 0
+            assert "Initialized with zero base flow" in result.output
+
+            # Check final output
+            field_files = sorted((output_dir / "fields").glob("*.nc"))
+            assert len(field_files) >= 1
+
+            ds = xr.open_dataset(field_files[-1])
+            
+            # Check base flow remains zero
+            theta = ds["theta"].values
+            assert np.allclose(theta, 0.0, atol=1e-10), "Base flow should remain zero"
+            
+            # Check scalar field
+            final_scalar = ds["scalar_growing"].values
+            ds.close()
+
+            # With exponential growth rate of 0.01 and t=0.1,
+            # field should have grown by factor of exp(0.01*0.1) = exp(0.001) ≈ 1.001
+            expected_growth = np.exp(0.01 * 0.1)
+            assert np.abs(final_scalar.mean() - expected_growth) < 0.001
+            assert np.all(np.isfinite(final_scalar)), "No NaN or Inf values"
 
     def test_multiple_scalar_species(self, scalar_config_dict):
         """Test simulation with multiple scalar species."""

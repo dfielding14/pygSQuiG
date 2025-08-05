@@ -291,7 +291,7 @@ class InitialConditionConfig:
     """Configuration for initial conditions.
 
     Attributes:
-        type: Type of initial condition ('random', 'checkpoint', 'function')
+        type: Type of initial condition ('random', 'checkpoint', 'function', 'zero')
         checkpoint_path: Path to checkpoint file (if type='checkpoint')
         amplitude: Amplitude for random initial conditions
         seed: Random seed for reproducibility
@@ -303,7 +303,7 @@ class InitialConditionConfig:
     seed: Optional[int] = None
 
     def __post_init__(self):
-        if self.type not in ["random", "checkpoint", "function"]:
+        if self.type not in ["random", "checkpoint", "function", "zero"]:
             raise ValueError(f"Unknown initial condition type: {self.type}")
         if self.type == "checkpoint" and self.checkpoint_path is None:
             raise ValueError("checkpoint_path required when type='checkpoint'")

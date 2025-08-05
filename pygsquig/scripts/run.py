@@ -167,6 +167,32 @@ def initialize_simulation(config, checkpoint_path, logger):
             else:
                 state = solver.initialize(seed=seed)
                 logger.info(f"Initialized with random initial condition (seed={seed})")
+        elif config.initial_condition.type == "zero":
+            # Zero initial condition for base flow
+            theta0 = jnp.zeros((grid.N, grid.N))
+
+            if config.scalars and config.scalars.enabled:
+                # Initialize scalars
+                scalar_init = {}
+                for species in config.scalars.species:
+                    if species.initial_condition == "zero":
+                        scalar_init[species.name] = jnp.zeros((grid.N, grid.N))
+                    elif species.initial_condition == "uniform":
+                        value = species.initial_params.get("value", 1.0)
+                        scalar_init[species.name] = value * jnp.ones((grid.N, grid.N))
+                    elif species.initial_condition == "gaussian":
+                        x0, y0 = species.initial_params.get("center", [grid.L / 2, grid.L / 2])
+                        width = species.initial_params.get("width", 1.0)
+                        r2 = (grid.x - x0) ** 2 + (grid.y - y0) ** 2
+                        scalar_init[species.name] = jnp.exp(-r2 / (2 * width**2))
+                    else:
+                        scalar_init[species.name] = jnp.zeros((grid.N, grid.N))
+
+                state = solver.initialize(theta0=theta0, scalar_init=scalar_init)
+                logger.info(f"Initialized with zero base flow and {len(scalar_init)} scalar(s)")
+            else:
+                state = solver.initialize(theta0=theta0)
+                logger.info("Initialized with zero initial condition")
         else:
             # TODO: Support other initial condition types
             raise NotImplementedError(
