@@ -11,10 +11,7 @@ Welcome to the pygSQuiG (Python generalized Surface Quasi-Geostrophic) solver do
 5. [Forcing Patterns](forcing_patterns.md) - Energy injection methods
 6. [Passive Scalars](passive_scalars_guide.md) - Tracer dynamics
 7. [Advanced Features](advanced_features.md) - GPU, adaptive timestepping
-8. [Analysis Tools](analysis_tools.md) - Post-processing and visualization
-9. [Examples](examples_guide.md) - Complete simulation examples
-10. [API Reference](api_reference.md) - Detailed API documentation
-11. [Troubleshooting](troubleshooting.md) - Common issues and solutions
+8. [Troubleshooting](troubleshooting.md) - Common issues and solutions
 
 ## Quick Example
 
