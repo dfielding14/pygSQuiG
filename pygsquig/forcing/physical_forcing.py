@@ -6,7 +6,7 @@ shear layers, jets, and other coherent structures.
 """
 
 from abc import ABC, abstractmethod
-from typing import Literal, Optional, Union
+from typing import Literal, Optional
 
 import jax
 import jax.numpy as jnp

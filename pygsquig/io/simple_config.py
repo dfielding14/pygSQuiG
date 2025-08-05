@@ -5,7 +5,7 @@ configuration system, using a single Config class with schema validation.
 """
 
 from pathlib import Path
-from typing import Any, Dict, Optional, Union
+from typing import Any, Optional, Union
 
 import numpy as np
 import yaml
@@ -94,7 +94,7 @@ class Config:
     while maintaining the same functionality and YAML structure.
     """
 
-    def __init__(self, config_dict: Optional[Dict[str, Any]] = None):
+    def __init__(self, config_dict: Optional[dict[str, Any]] = None):
         """Initialize configuration with optional dictionary.
 
         Args:
@@ -108,9 +108,7 @@ class Config:
             self._deep_update(self._config, config_dict)
 
         # Auto-enable forcing if forcing parameters are provided
-        if "forcing" in (config_dict or {}) and not (
-            "enabled" in (config_dict or {}).get("forcing", {})
-        ):
+        if "forcing" in (config_dict or {}) and "enabled" not in (config_dict or {}).get("forcing", {}):
             # If forcing params provided but enabled not specified, auto-enable
             if (
                 self._config["forcing"].get("epsilon", 0) > 0
@@ -119,9 +117,7 @@ class Config:
                 self._config["forcing"]["enabled"] = True
 
         # Auto-enable damping if damping parameters are provided
-        if "damping" in (config_dict or {}) and not (
-            "enabled" in (config_dict or {}).get("damping", {})
-        ):
+        if "damping" in (config_dict or {}) and "enabled" not in (config_dict or {}).get("damping", {}):
             if self._config["damping"].get("mu", 0) > 0:
                 self._config["damping"]["enabled"] = True
 
@@ -138,7 +134,7 @@ class Config:
         Returns:
             Config instance
         """
-        with open(path, "r") as f:
+        with open(path) as f:
             data = yaml.safe_load(f)
         return cls(data)
 
@@ -192,9 +188,8 @@ class Config:
         config[keys[-1]] = value
 
         # Validate this specific key
-        if key in VALIDATION_RULES:
-            if not VALIDATION_RULES[key](value):
-                raise ValueError(f"Invalid value for {key}: {value}")
+        if key in VALIDATION_RULES and not VALIDATION_RULES[key](value):
+            raise ValueError(f"Invalid value for {key}: {value}")
 
     def _validate(self) -> None:
         """Validate entire configuration."""

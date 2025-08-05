@@ -4,10 +4,9 @@ This script provides tools for post-processing and visualizing simulation result
 """
 
 from pathlib import Path
-from typing import List, Optional, Tuple
+from typing import Optional
 
 import click
-import h5py
 import matplotlib.pyplot as plt
 import numpy as np
 import xarray as xr
@@ -25,9 +24,9 @@ def load_time_series(diagnostics_file: Path) -> dict:
 
 def plot_time_series(
     diagnostics: dict,
-    quantities: List[str],
+    quantities: list[str],
     output_file: Optional[Path] = None,
-    figsize: Tuple[float, float] = (10, 6),
+    figsize: tuple[float, float] = (10, 6),
 ) -> None:
     """Plot time series of diagnostic quantities.
 
@@ -70,7 +69,7 @@ def plot_energy_spectrum(
     field_file: Path,
     output_file: Optional[Path] = None,
     reference_slope: Optional[float] = None,
-    figsize: Tuple[float, float] = (8, 6),
+    figsize: tuple[float, float] = (8, 6),
 ) -> None:
     """Plot energy spectrum from a field snapshot.
 
@@ -150,7 +149,7 @@ def plot_field_snapshot(
     field_name: str = "theta",
     output_file: Optional[Path] = None,
     cmap: str = "RdBu_r",
-    figsize: Tuple[float, float] = (8, 6),
+    figsize: tuple[float, float] = (8, 6),
 ) -> None:
     """Plot a field snapshot.
 
@@ -201,7 +200,7 @@ def plot_field_snapshot(
 
 def compute_time_averaged_spectrum(
     field_dir: Path, start_time: Optional[float] = None, end_time: Optional[float] = None
-) -> Tuple[np.ndarray, np.ndarray]:
+) -> tuple[np.ndarray, np.ndarray]:
     """Compute time-averaged energy spectrum from multiple snapshots.
 
     Args:
@@ -244,7 +243,7 @@ def compute_time_averaged_spectrum(
     E_k_sum = None
     k_centers = None
 
-    for i, file in enumerate(selected_files):
+    for _i, file in enumerate(selected_files):
         ds = load_output(file)
 
         if "theta" not in ds:

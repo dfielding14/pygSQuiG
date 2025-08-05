@@ -7,7 +7,7 @@ used in computational fluid dynamics research.
 """
 
 from abc import ABC, abstractmethod
-from typing import Callable, Literal, Optional, Union
+from typing import Literal, Optional
 
 import jax
 import jax.numpy as jnp
@@ -15,7 +15,6 @@ import numpy as np
 
 from pygsquig.core.grid import Grid, fft2, ifft2
 from pygsquig.exceptions import ForcingError
-from pygsquig.validation import validate_diffusivity
 
 
 class DeterministicForcing(ABC):
@@ -108,10 +107,7 @@ class TaylorGreenForcing(DeterministicForcing):
         """Compute Taylor-Green forcing."""
         # Time modulation if requested
         t = float(getattr(self, "_time", 0.0))  # Track time internally
-        if self.time_dependent:
-            amp = self.amplitude * jnp.cos(t)
-        else:
-            amp = self.amplitude
+        amp = self.amplitude * jnp.cos(t) if self.time_dependent else self.amplitude
 
         # Create forcing in physical space
         kx = self.k * 2 * np.pi / grid.L

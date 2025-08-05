@@ -5,17 +5,14 @@ This module provides adaptive timestep selection based on the
 Courant-Friedrichs-Lewy (CFL) condition and other stability criteria.
 """
 
-import warnings
 from dataclasses import dataclass
-from typing import Any, Dict, Optional, Tuple
+from typing import Any, Optional
 
 import jax
 import jax.numpy as jnp
 from jax import Array
 
 from pygsquig.core.grid import Grid
-from pygsquig.exceptions import NumericalError
-from pygsquig.validation import validate_timestep
 
 
 @dataclass
@@ -136,7 +133,7 @@ def compute_timestep(
     nu_p: float = 0.0,
     p: int = 8,
     current_dt: Optional[float] = None,
-) -> Tuple[float, Dict[str, float]]:
+) -> tuple[float, dict[str, float]]:
     """Compute adaptive timestep based on CFL conditions.
 
     Args:
@@ -226,8 +223,8 @@ class AdaptiveTimestepper:
         self.n_dt_changes = 0
 
     def compute_timestep(
-        self, state: Dict[str, Any], u: Array, v: Array, nu_p: float = 0.0, p: int = 8
-    ) -> Tuple[float, Dict[str, float]]:
+        self, state: dict[str, Any], u: Array, v: Array, nu_p: float = 0.0, p: int = 8
+    ) -> tuple[float, dict[str, float]]:
         """Compute timestep for current state.
 
         Args:
@@ -266,8 +263,8 @@ class AdaptiveTimestepper:
         return dt_new, diags
 
     def check_stability(
-        self, state_before: Dict[str, Any], state_after: Dict[str, Any], dt_used: float
-    ) -> Tuple[bool, Optional[str]]:
+        self, state_before: dict[str, Any], state_after: dict[str, Any], dt_used: float
+    ) -> tuple[bool, Optional[str]]:
         """Check if timestep resulted in stable integration.
 
         Args:
@@ -313,7 +310,7 @@ class AdaptiveTimestepper:
 
         return max(dt_retry, self.config.dt_min)
 
-    def get_statistics(self) -> Dict[str, Any]:
+    def get_statistics(self) -> dict[str, Any]:
         """Get timestepping statistics.
 
         Returns:

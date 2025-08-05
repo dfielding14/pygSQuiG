@@ -6,11 +6,9 @@ timesteps based on stability criteria.
 """
 
 import time as pytime
-from typing import Any, Callable, Dict, Optional, Tuple
+from typing import Any, Callable, Optional
 
 import jax
-import jax.numpy as jnp
-from jax import Array
 
 from pygsquig.core.adaptive_timestep import (
     AdaptiveTimestepper,
@@ -20,7 +18,6 @@ from pygsquig.core.adaptive_timestep import (
 from pygsquig.core.grid import Grid
 from pygsquig.core.operators import compute_velocity_from_theta
 from pygsquig.core.solver import State, gSQGSolver
-from pygsquig.exceptions import NumericalError
 
 
 class AdaptivegSQGSolver:
@@ -87,7 +84,7 @@ class AdaptivegSQGSolver:
         forcing: Optional[Callable] = None,
         damping: Optional[Callable] = None,
         **kwargs,
-    ) -> Tuple[State, Dict[str, Any]]:
+    ) -> tuple[State, dict[str, Any]]:
         """Advance solution with adaptive timestep.
 
         Args:
@@ -170,7 +167,7 @@ class AdaptivegSQGSolver:
         save_interval: Optional[float] = None,
         callback: Optional[Callable] = None,
         **kwargs,
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """Evolve system to final time with adaptive stepping.
 
         Args:
@@ -272,7 +269,7 @@ class AdaptivegSQGSolver:
         results["final_state"] = current_state
 
         if self.verbose:
-            print(f"\nEvolution complete:")
+            print("\nEvolution complete:")
             print(f"  Total steps: {step_count}")
             print(f"  Wall time: {wall_time_total:.2f}s")
             print(f"  Mean timestep: {stats['dt_mean']:.3e}")
@@ -280,7 +277,7 @@ class AdaptivegSQGSolver:
 
         return results
 
-    def get_diagnostics(self, state: State) -> Dict[str, float]:
+    def get_diagnostics(self, state: State) -> dict[str, float]:
         """Get solver diagnostics including CFL information.
 
         Args:

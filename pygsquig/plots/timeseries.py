@@ -1,7 +1,7 @@
 """Time series plotting functions for pygSQuiG simulations."""
 
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Optional
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -11,10 +11,10 @@ from .style import PlotStyle
 
 def plot_time_series_multiplot(
     time_data: np.ndarray,
-    data_dict: Dict[str, np.ndarray],
-    labels: Optional[Dict[str, str]] = None,
+    data_dict: dict[str, np.ndarray],
+    labels: Optional[dict[str, str]] = None,
     output_path: Optional[Path] = None,
-    figsize: Optional[Tuple[float, float]] = None,
+    figsize: Optional[tuple[float, float]] = None,
 ) -> Optional[plt.Figure]:
     """Plot multiple time series in subplots.
 
@@ -64,7 +64,7 @@ def plot_energy_balance(
     injection_rate: Optional[np.ndarray] = None,
     dissipation_rate: Optional[np.ndarray] = None,
     output_path: Optional[Path] = None,
-    figsize: Optional[Tuple[float, float]] = None,
+    figsize: Optional[tuple[float, float]] = None,
 ) -> Optional[plt.Figure]:
     """Plot energy balance showing energy, injection, and dissipation.
 
@@ -118,10 +118,10 @@ def plot_energy_balance(
 
 def plot_conservation_check(
     time_data: np.ndarray,
-    quantities: Dict[str, np.ndarray],
+    quantities: dict[str, np.ndarray],
     relative: bool = True,
     output_path: Optional[Path] = None,
-    figsize: Optional[Tuple[float, float]] = None,
+    figsize: Optional[tuple[float, float]] = None,
 ) -> Optional[plt.Figure]:
     """Plot conservation of quantities over time.
 
@@ -173,7 +173,7 @@ def plot_regime_evolution(
     reynolds: np.ndarray,
     rossby: Optional[np.ndarray] = None,
     output_path: Optional[Path] = None,
-    figsize: Optional[Tuple[float, float]] = None,
+    figsize: Optional[tuple[float, float]] = None,
 ) -> Optional[plt.Figure]:
     """Plot evolution of non-dimensional parameters.
 

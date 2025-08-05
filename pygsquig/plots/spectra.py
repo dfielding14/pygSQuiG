@@ -1,7 +1,7 @@
 """Spectrum analysis plotting functions for pygSQuiG simulations."""
 
 from pathlib import Path
-from typing import Dict, Optional, Tuple
+from typing import Optional
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -15,11 +15,11 @@ def plot_energy_spectrum_with_analysis(
     theta_hat: np.ndarray,
     grid: Grid,
     alpha: float,
-    reference_slopes: Optional[Dict[str, float]] = None,
-    inertial_range: Optional[Tuple[float, float]] = None,
+    reference_slopes: Optional[dict[str, float]] = None,
+    inertial_range: Optional[tuple[float, float]] = None,
     output_path: Optional[Path] = None,
-    figsize: Optional[Tuple[float, float]] = None,
-) -> Tuple[Optional[plt.Figure], float]:
+    figsize: Optional[tuple[float, float]] = None,
+) -> tuple[Optional[plt.Figure], float]:
     """Plot energy spectrum with reference slopes and inertial range analysis.
 
     Args:
@@ -56,7 +56,7 @@ def plot_energy_spectrum_with_analysis(
         k_ref = k[k_ref_start:k_ref_end]
 
         if len(k_ref) > 10:
-            for i, (label, slope) in enumerate(reference_slopes.items()):
+            for _i, (label, slope) in enumerate(reference_slopes.items()):
                 # Use a point in the middle of the reference range
                 ref_idx = min(10, len(k_ref) // 2)
                 E_ref = E_k[k_ref_start + ref_idx] * (k_ref / k_ref[ref_idx]) ** slope
@@ -100,10 +100,10 @@ def plot_energy_spectrum_with_analysis(
 
 
 def plot_spectrum_evolution(
-    spectra_data: Dict[float, Tuple[np.ndarray, np.ndarray]],
+    spectra_data: dict[float, tuple[np.ndarray, np.ndarray]],
     alpha: float,
     output_path: Optional[Path] = None,
-    figsize: Optional[Tuple[float, float]] = None,
+    figsize: Optional[tuple[float, float]] = None,
 ) -> Optional[plt.Figure]:
     """Plot evolution of energy spectra at different times.
 
@@ -156,7 +156,7 @@ def plot_compensated_spectrum(
     alpha: float,
     compensation_exponent: float = 5 / 3,
     output_path: Optional[Path] = None,
-    figsize: Optional[Tuple[float, float]] = None,
+    figsize: Optional[tuple[float, float]] = None,
 ) -> Optional[plt.Figure]:
     """Plot compensated energy spectrum E(k) * k^(compensation_exponent).
 

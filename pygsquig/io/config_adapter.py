@@ -4,7 +4,7 @@ This module provides compatibility between the simplified configuration system
 and existing code that expects the complex dataclass-based configurations.
 """
 
-from typing import Any, Optional
+from typing import Any
 
 from .simple_config import Config
 

@@ -5,7 +5,7 @@ This module provides utilities for combining multiple forcing patterns
 with different weights and combination strategies.
 """
 
-from typing import List, Literal, Optional, Union
+from typing import Literal, Optional
 
 import jax
 import jax.numpy as jnp
@@ -24,8 +24,8 @@ class CombinedForcing:
 
     def __init__(
         self,
-        forcings: List,
-        weights: Optional[List[float]] = None,
+        forcings: list,
+        weights: Optional[list[float]] = None,
         combination_type: Literal["additive", "multiplicative"] = "additive",
     ):
         """Initialize combined forcing.
@@ -92,7 +92,7 @@ class CombinedForcing:
         # Add weighted contributions
         for forcing, weight, subkey in zip(self.forcings, self.weights, keys):
             # Handle both deterministic and stochastic forcings
-            if hasattr(forcing, "__call__"):
+            if callable(forcing):
                 # Check if forcing expects a key parameter
                 import inspect
 

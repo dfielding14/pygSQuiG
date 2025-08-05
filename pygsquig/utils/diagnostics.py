@@ -5,7 +5,7 @@ such as energy spectra, fluxes, and other relevant statistics.
 """
 
 from functools import partial
-from typing import Optional, Tuple
+from typing import Optional
 
 import jax
 import jax.numpy as jnp
@@ -13,7 +13,6 @@ import numpy as np
 
 from ..core.grid import Grid
 from ..core.operators import (
-    compute_velocity_from_theta,
     fractional_laplacian,
     jacobian,
 )
@@ -31,7 +30,7 @@ def _compute_energy_density(theta_hat: jnp.ndarray, k2: jnp.ndarray, alpha: floa
 
 def compute_energy_spectrum(
     theta_hat: jnp.ndarray, grid: Grid, alpha: float
-) -> Tuple[np.ndarray, np.ndarray]:
+) -> tuple[np.ndarray, np.ndarray]:
     """Compute the energy spectrum E(k) for gSQG.
 
     For gSQG, the energy is defined as:
@@ -87,7 +86,7 @@ def compute_energy_spectrum(
 
 @jax.jit
 def compute_scalar_flux(
-    theta_hat: jnp.ndarray, velocity: Tuple[jnp.ndarray, jnp.ndarray], grid: Grid
+    theta_hat: jnp.ndarray, velocity: tuple[jnp.ndarray, jnp.ndarray], grid: Grid
 ) -> jnp.ndarray:
     """Compute the scalar flux ⟨u·∇θ²⟩.
 

@@ -6,7 +6,7 @@ white noise, colored noise, and stochastic vortex injection.
 """
 
 from abc import ABC, abstractmethod
-from typing import Optional, Tuple, Union
+from typing import Optional
 
 import jax
 import jax.numpy as jnp

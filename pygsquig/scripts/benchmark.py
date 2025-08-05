@@ -128,7 +128,7 @@ def main():
     print(f"Time for 10k steps: {time_10k:.1f} seconds ({time_10k/60:.1f} minutes)")
 
     # Breakdown
-    print(f"\nOperator breakdown (% of solver step):")
+    print("\nOperator breakdown (% of solver step):")
     print(f"  Velocity computation: {times['velocity']/times['solver_step']*100:.1f}%")
     print(f"  Jacobian (advection): {times['jacobian']/times['solver_step']*100:.1f}%")
 

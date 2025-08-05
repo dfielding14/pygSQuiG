@@ -5,7 +5,6 @@ This module implements differential operators in spectral space for
 the generalized Surface Quasi-Geostrophic (gSQG) equations.
 """
 
-from typing import Tuple
 
 import jax
 import jax.numpy as jnp
@@ -14,7 +13,7 @@ from pygsquig.core.grid import Grid, fft2, ifft2
 
 
 @jax.jit
-def gradient(theta_hat: jax.Array, grid: Grid) -> Tuple[jax.Array, jax.Array]:
+def gradient(theta_hat: jax.Array, grid: Grid) -> tuple[jax.Array, jax.Array]:
     """
     Compute gradient of a scalar field in physical space.
 
@@ -75,7 +74,7 @@ def fractional_laplacian(theta_hat: jax.Array, grid: Grid, alpha: float) -> jax.
 
 
 @jax.jit
-def perpendicular_gradient(psi_hat: jax.Array, grid: Grid) -> Tuple[jax.Array, jax.Array]:
+def perpendicular_gradient(psi_hat: jax.Array, grid: Grid) -> tuple[jax.Array, jax.Array]:
     """
     Compute perpendicular gradient ∇^⊥ψ = (-∂yψ, ∂xψ).
 
@@ -160,7 +159,7 @@ def compute_streamfunction(theta_hat: jax.Array, grid: Grid, alpha: float) -> ja
 @jax.jit
 def compute_velocity_from_theta(
     theta_hat: jax.Array, grid: Grid, alpha: float
-) -> Tuple[jax.Array, jax.Array]:
+) -> tuple[jax.Array, jax.Array]:
     """
     Compute velocity field from scalar field θ for gSQG dynamics.
 

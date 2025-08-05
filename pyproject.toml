@@ -109,8 +109,13 @@ select = [
 ignore = [
     "E501",  # line too long (handled by black)
     "E731",  # lambda assignment
+    "N801",  # class name should use CapWords convention (allow gSQG*)
     "N803",  # argument name should be lowercase (allow N for grid size)
     "N806",  # variable in function should be lowercase (allow math conventions like N, L, E_k)
+    "B023",  # function definition does not bind loop variable (common in scientific code)
+    "SIM102", # use a single if statement (sometimes nested is clearer)
+    "SIM108", # use ternary operator (sometimes if-else is clearer)
+    "E402",  # module level import not at top (sometimes needed for circular imports)
 ]
 
 [tool.mypy]

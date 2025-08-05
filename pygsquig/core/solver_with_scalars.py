@@ -6,12 +6,10 @@ evolution capabilities while maintaining backward compatibility.
 """
 
 from dataclasses import dataclass
-from typing import Any, Callable, Dict, Optional, Union
+from typing import Any, Callable, Optional, Union
 
-import jax
 import jax.numpy as jnp
 
-from pygsquig.core.grid import fft2
 from pygsquig.core.solver import State, gSQGSolver
 from pygsquig.exceptions import ConfigurationError
 from pygsquig.scalars.passive_scalar import MultiSpeciesEvolver, PassiveScalarEvolver
@@ -72,7 +70,7 @@ class gSQGSolverWithScalars(gSQGSolver):
         alpha: float,
         nu_p: float = 0.0,
         p: int = 8,
-        passive_scalars: Optional[Dict[str, Dict]] = None,
+        passive_scalars: Optional[dict[str, dict]] = None,
     ):
         """Initialize solver with optional passive scalars.
 
@@ -97,7 +95,7 @@ class gSQGSolverWithScalars(gSQGSolver):
         self,
         theta0: Optional[jnp.ndarray] = None,
         seed: Optional[int] = None,
-        scalar_init: Optional[Dict[str, jnp.ndarray]] = None,
+        scalar_init: Optional[dict[str, jnp.ndarray]] = None,
     ) -> Union[State, ExtendedState]:
         """Initialize simulation state with optional scalars.
 
@@ -178,7 +176,7 @@ class gSQGSolverWithScalars(gSQGSolver):
         # Return extended state
         return ExtendedState(base_state=new_base_state, scalar_state=new_scalar_state)
 
-    def get_diagnostics(self, state: Union[State, ExtendedState]) -> Dict[str, float]:
+    def get_diagnostics(self, state: Union[State, ExtendedState]) -> dict[str, float]:
         """Compute diagnostics including passive scalars.
 
         Args:

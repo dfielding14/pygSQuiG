@@ -1,15 +1,12 @@
 """Main script to run pygSQuiG simulations from YAML configuration files."""
 
 import signal
-import sys
 import time
-from datetime import datetime, timedelta
 from pathlib import Path
 
 import click
 import jax
 import jax.numpy as jnp
-import numpy as np
 
 from pygsquig.core.grid import ifft2, make_grid
 from pygsquig.core.solver import gSQGSolver
@@ -256,10 +253,9 @@ def main(config, device, checkpoint, output_dir, dry_run, log_level):
             device = "cpu"
         else:
             logger.info(f"Using GPU: {jax.devices('gpu')[0]}")
-    elif device == "tpu":
-        if not jax.devices("tpu"):
-            logger.warning("No TPU found, falling back to CPU")
-            device = "cpu"
+    elif device == "tpu" and not jax.devices("tpu"):
+        logger.warning("No TPU found, falling back to CPU")
+        device = "cpu"
 
     logger.info(f"Loading configuration: {config}")
 

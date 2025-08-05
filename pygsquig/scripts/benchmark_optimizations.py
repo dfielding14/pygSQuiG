@@ -96,7 +96,7 @@ def run_comparison():
         single_speedup = orig_mean / opt_mean
         multi_speedup = orig_mean / opt_multi if opt_multi else 0
 
-        print(f"\nSpeedup:")
+        print("\nSpeedup:")
         print(f"  Single step: {single_speedup:.2f}x")
         print(f"  Multistep:   {multi_speedup:.2f}x")
 

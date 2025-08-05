@@ -6,7 +6,6 @@ spatial discretization and spectral operations in doubly-periodic domains.
 """
 
 from functools import partial
-from typing import Any, Tuple
 
 import jax
 import jax.numpy as jnp
@@ -51,7 +50,7 @@ class Grid:
         self.k2 = k2
         self.dealias_mask = dealias_mask
 
-    def tree_flatten(self) -> Tuple[list, dict]:
+    def tree_flatten(self) -> tuple[list, dict]:
         """Flatten Grid into JAX-compatible format."""
         # Arrays that should be traced by JAX
         children = [self.x, self.y, self.kx, self.ky, self.k2, self.dealias_mask]

@@ -7,7 +7,7 @@ Configuration files are written in YAML and converted to these dataclasses.
 
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import List, Optional, Union
+from typing import Optional, Union
 
 import numpy as np
 import yaml
@@ -172,8 +172,8 @@ class OutputConfig:
         compress: Whether to use HDF5 compression
     """
 
-    fields: List[str] = field(default_factory=lambda: ["theta"])
-    diagnostics: List[str] = field(default_factory=lambda: ["energy_spectrum", "scalar_flux"])
+    fields: list[str] = field(default_factory=lambda: ["theta"])
+    diagnostics: list[str] = field(default_factory=lambda: ["energy_spectrum", "scalar_flux"])
     save_every_n_steps: Optional[int] = None
     compress: bool = True
 
@@ -277,7 +277,7 @@ class ScalarsConfig:
     """
 
     enabled: bool = False
-    species: List[PassiveScalarConfig] = field(default_factory=list)
+    species: list[PassiveScalarConfig] = field(default_factory=list)
 
     def __post_init__(self):
         # Check for duplicate names
@@ -336,7 +336,7 @@ class RunConfig:
         Returns:
             RunConfig instance
         """
-        with open(path, "r") as f:
+        with open(path) as f:
             data = yaml.safe_load(f)
         return cls.from_dict(data)
 

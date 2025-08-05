@@ -11,7 +11,6 @@ from typing import Callable, Optional
 
 import jax
 import jax.numpy as jnp
-import numpy as np
 
 from pygsquig.core.grid import Grid
 from pygsquig.exceptions import SourceTermError
@@ -52,7 +51,7 @@ class SourceTerm(ABC):
         try:
             validate_array_shape(scalar, (grid.N, grid.N), "scalar")
         except Exception as e:
-            raise SourceTermError(f"Invalid input to source term: {e}")
+            raise SourceTermError(f"Invalid input to source term: {e}") from e
 
 
 @dataclass
@@ -258,7 +257,7 @@ class LinearCombination(SourceTerm):
         self.sources = sources
 
         # Validate
-        for weight, source in sources:
+        for _weight, source in sources:
             if not isinstance(source, SourceTerm):
                 raise SourceTermError(f"Expected SourceTerm, got {type(source).__name__}")
 

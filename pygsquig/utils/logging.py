@@ -9,7 +9,7 @@ import logging
 import sys
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import Any, Optional
 
 
 class SimulationLogger:
@@ -57,7 +57,7 @@ class SimulationLogger:
             self.logger.addHandler(file_handler)
 
         # Store metadata for structured logging
-        self.metadata: Dict[str, Any] = {}
+        self.metadata: dict[str, Any] = {}
 
     def set_metadata(self, **kwargs):
         """Set metadata that will be included in structured log messages."""
@@ -108,7 +108,7 @@ class SimulationLogger:
         time: float,
         step: int,
         dt: float,
-        diagnostics: Dict[str, float],
+        diagnostics: dict[str, float],
         eta_seconds: Optional[float] = None,
     ):
         """Log simulation progress with diagnostics."""

@@ -5,7 +5,6 @@ This module provides functions to compute various diagnostics
 for passive scalar fields including spectra, fluxes, and mixing metrics.
 """
 
-from typing import Optional, Tuple
 
 import jax
 import jax.numpy as jnp
@@ -16,7 +15,7 @@ from pygsquig.core.grid import Grid, ifft2
 
 def compute_scalar_variance_spectrum(
     scalar_hat: jnp.ndarray, grid: Grid
-) -> Tuple[jnp.ndarray, jnp.ndarray]:
+) -> tuple[jnp.ndarray, jnp.ndarray]:
     """Compute spectrum of scalar variance.
 
     For a passive scalar θ, this computes the variance spectrum
@@ -65,7 +64,7 @@ def compute_scalar_variance_spectrum(
 
 def compute_scalar_flux(
     scalar_hat: jnp.ndarray, u: jnp.ndarray, v: jnp.ndarray, grid: Grid
-) -> Tuple[float, float]:
+) -> tuple[float, float]:
     """Compute turbulent scalar flux ⟨u'θ'⟩.
 
     This measures the correlation between velocity fluctuations

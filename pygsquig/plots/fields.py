@@ -1,7 +1,7 @@
 """Field visualization functions for pygSQuiG simulations."""
 
 from pathlib import Path
-from typing import Optional, Tuple
+from typing import Optional
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -18,7 +18,7 @@ def plot_field_slice(
     cmap: Optional[str] = None,
     vmin: Optional[float] = None,
     vmax: Optional[float] = None,
-    figsize: Optional[Tuple[float, float]] = None,
+    figsize: Optional[tuple[float, float]] = None,
     output_path: Optional[Path] = None,
     show_colorbar: bool = True,
     ax: Optional[plt.Axes] = None,
@@ -126,7 +126,7 @@ def plot_velocity_fields(
     grid: Grid,
     alpha: float,
     output_path: Optional[Path] = None,
-    figsize: Optional[Tuple[float, float]] = None,
+    figsize: Optional[tuple[float, float]] = None,
 ) -> Optional[plt.Figure]:
     """Plot velocity components u and v side by side.
 

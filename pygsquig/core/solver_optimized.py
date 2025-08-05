@@ -6,7 +6,7 @@ JAX-specific optimizations for better performance.
 """
 
 from functools import partial
-from typing import Any, Callable, Dict, Optional, Tuple
+from typing import Callable, Optional
 
 import jax
 import jax.numpy as jnp
@@ -20,7 +20,7 @@ from pygsquig.core.operators import (
 from pygsquig.core.time_integrator import rk4_step
 
 # Type alias for state
-State = Dict[str, jax.Array]
+State = dict[str, jax.Array]
 
 
 @jax.jit
@@ -63,14 +63,14 @@ def _rk4_step_optimized(
 
 
 def _multistep_scan(
-    carry: Tuple[jax.Array, float],
+    carry: tuple[jax.Array, float],
     _: None,
     grid: Grid,
     alpha: float,
     nu_p: float,
     p: float,
     dt: float,
-) -> Tuple[Tuple[jax.Array, float], jax.Array]:
+) -> tuple[tuple[jax.Array, float], jax.Array]:
     """
     Single step function for lax.scan multistep integration.
     """
@@ -202,7 +202,7 @@ class gSQGSolverOptimized:
         """Compute velocity field from θ."""
         return compute_velocity_from_theta(theta_hat, self.grid, self.alpha)
 
-    def get_diagnostics(self, state: State) -> Dict[str, float]:
+    def get_diagnostics(self, state: State) -> dict[str, float]:
         """Compute diagnostic quantities (same as base solver)."""
         theta_hat = state["theta_hat"]
         theta = ifft2(theta_hat)

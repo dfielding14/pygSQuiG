@@ -6,7 +6,7 @@ passive scalars advected by velocity fields with diffusion and sources.
 """
 
 from dataclasses import dataclass, field
-from typing import Callable, Dict, Optional, Tuple
+from typing import Optional
 
 import jax
 import jax.numpy as jnp
@@ -204,10 +204,7 @@ class PassiveScalarEvolver:
             RHS in spectral space
         """
         # Compute source term if present
-        if self.source_fn is not None:
-            source_hat = self.compute_source(scalar_hat, t)
-        else:
-            source_hat = None
+        source_hat = self.compute_source(scalar_hat, t) if self.source_fn is not None else None
 
         # Use JIT-compiled RHS function
         return compute_passive_scalar_rhs(scalar_hat, u, v, self.grid, self.kappa, source_hat)
@@ -260,7 +257,7 @@ class PassiveScalarEvolver:
             total_dissipation=float(total_dissipation),
         )
 
-    def get_diagnostics(self, state: PassiveScalarState) -> Dict[str, float]:
+    def get_diagnostics(self, state: PassiveScalarState) -> dict[str, float]:
         """Compute diagnostic quantities for the scalar field.
 
         Args:
@@ -305,7 +302,7 @@ class MultiSpeciesEvolver:
     """
 
     grid: Grid
-    species: Dict[str, Dict] = field(default_factory=dict)
+    species: dict[str, dict] = field(default_factory=dict)
     coupled_sources: list = field(default_factory=list)
 
     def __post_init__(self):
@@ -320,7 +317,7 @@ class MultiSpeciesEvolver:
                 name=name,
             )
 
-    def initialize(self, initial_fields: Dict[str, jnp.ndarray]) -> MultiScalarState:
+    def initialize(self, initial_fields: dict[str, jnp.ndarray]) -> MultiScalarState:
         """Initialize all scalar fields.
 
         Args:
@@ -379,8 +376,8 @@ class MultiSpeciesEvolver:
         )
 
     def _apply_coupled_sources(
-        self, scalars: Dict[str, jnp.ndarray], t: float, dt: float
-    ) -> Dict[str, jnp.ndarray]:
+        self, scalars: dict[str, jnp.ndarray], t: float, dt: float
+    ) -> dict[str, jnp.ndarray]:
         """Apply coupled source terms.
 
         Args:

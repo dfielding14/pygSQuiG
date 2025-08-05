@@ -7,7 +7,7 @@ across multiple GPUs using pmap and shard_map.
 
 import functools
 from dataclasses import dataclass
-from typing import Any, Callable, Dict, List, Optional, Tuple
+from typing import Any, Optional
 
 import jax
 import jax.numpy as jnp
@@ -15,10 +15,10 @@ import numpy as np
 from jax import Array
 from jax.experimental import mesh_utils
 from jax.experimental.shard_map import shard_map
-from jax.sharding import Mesh, NamedSharding
+from jax.sharding import Mesh
 from jax.sharding import PartitionSpec as P
 
-from pygsquig.core.grid import Grid, fft2, ifft2, make_grid
+from pygsquig.core.grid import Grid, fft2, ifft2
 from pygsquig.exceptions import ConfigurationError
 
 
@@ -29,12 +29,12 @@ class ParallelConfig:
     n_devices: int
     ensemble_size: Optional[int] = None
     domain_decomposition: bool = False
-    axis_names: Tuple[str, ...] = ("device",)
-    mesh_shape: Optional[Tuple[int, ...]] = None
+    axis_names: tuple[str, ...] = ("device",)
+    mesh_shape: Optional[tuple[int, ...]] = None
 
 
 def create_device_mesh(
-    n_devices: Optional[int] = None, mesh_shape: Optional[Tuple[int, ...]] = None
+    n_devices: Optional[int] = None, mesh_shape: Optional[tuple[int, ...]] = None
 ) -> Mesh:
     """Create device mesh for multi-GPU execution.
 
@@ -104,8 +104,6 @@ class MultiGPUSolver:
 
     def _setup_parallel_functions(self):
         """Create parallelized versions of core functions."""
-        from pygsquig.core.operators import compute_velocity_from_theta, hyperviscosity, jacobian
-        from pygsquig.core.time_integrator import rk4_step
 
         if self.config.ensemble_size is not None:
             # Ensemble parallelism - each device runs independent simulation
@@ -168,7 +166,7 @@ class MultiGPUSolver:
         if N % n_dev != 0:
             raise ConfigurationError(f"Grid size {N} must be divisible by device count {n_dev}")
 
-        local_N = N // n_dev
+        N // n_dev
 
         @functools.partial(
             shard_map, mesh=self.mesh, in_specs=P("device", None), out_specs=P("device", None)
@@ -208,7 +206,7 @@ class MultiGPUSolver:
 
     def run_ensemble(
         self, n_steps: int, dt: float, save_interval: int = 100, seed: int = 42
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """Run ensemble simulation across GPUs.
 
         Args:
@@ -259,7 +257,7 @@ class MultiGPUSolver:
 
         return results
 
-    def benchmark_scaling(self, n_steps: int = 100, dt: float = 0.001) -> Dict[str, float]:
+    def benchmark_scaling(self, n_steps: int = 100, dt: float = 0.001) -> dict[str, float]:
         """Benchmark multi-GPU scaling.
 
         Args:
@@ -325,7 +323,7 @@ class MultiGPUSolver:
 
 def optimize_domain_decomposition(
     N: int, n_devices: int, decomp_type: str = "1d"
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """Determine optimal domain decomposition strategy.
 
     Args:
@@ -391,8 +389,8 @@ def optimize_domain_decomposition(
 
 # Helper function for ensemble statistics
 def ensemble_statistics(
-    ensemble_states: List[Array], grid: Grid, alpha: float
-) -> Dict[str, Array]:
+    ensemble_states: list[Array], grid: Grid, alpha: float
+) -> dict[str, Array]:
     """Compute statistics across ensemble.
 
     Args:

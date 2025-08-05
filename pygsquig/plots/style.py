@@ -1,6 +1,5 @@
 """Plot styling configuration for pygSQuiG visualizations."""
 
-from typing import Tuple
 
 import matplotlib.pyplot as plt
 

@@ -1,15 +1,13 @@
 """Main script to run pygSQuiG simulations from YAML configuration files."""
 
 import signal
-import sys
 import time
-from datetime import datetime, timedelta
+from datetime import timedelta
 from pathlib import Path
 
 import click
 import jax
 import jax.numpy as jnp
-import numpy as np
 
 from pygsquig.core.grid import make_grid
 from pygsquig.core.solver import gSQGSolver
@@ -20,7 +18,6 @@ from pygsquig.io import (
     save_diagnostics,
     save_output,
 )
-from pygsquig.utils import compute_enstrophy, compute_total_energy, setup_logging
 
 # Global flag for graceful shutdown
 shutdown_requested = False
@@ -138,10 +135,9 @@ def main(config, device, checkpoint, output_dir, dry_run, log_level):
             device = "cpu"
         else:
             click.echo(f"Using GPU: {jax.devices('gpu')[0]}")
-    elif device == "tpu":
-        if not jax.devices("tpu"):
-            click.echo("Warning: No TPU found, falling back to CPU", err=True)
-            device = "cpu"
+    elif device == "tpu" and not jax.devices("tpu"):
+        click.echo("Warning: No TPU found, falling back to CPU", err=True)
+        device = "cpu"
 
     # Load configuration
     click.echo(f"Loading configuration: {config}")
@@ -296,7 +292,6 @@ def main(config, device, checkpoint, output_dir, dry_run, log_level):
         if run_config.simulation.wall_time_limit:
             if time.time() - t_start > run_config.simulation.wall_time_limit:
                 click.echo("\nWall time limit reached!")
-                shutdown_requested = True
 
     # Final checkpoint and output
     click.echo("\nSaving final state...")
@@ -313,7 +308,7 @@ def main(config, device, checkpoint, output_dir, dry_run, log_level):
 
     # Summary
     elapsed = time.time() - t_start
-    click.echo(f"\nSimulation completed!")
+    click.echo("\nSimulation completed!")
     click.echo(f"Final time: {state['time']:.3f}")
     click.echo(f"Total steps: {state['step']}")
     click.echo(f"Wall time: {timedelta(seconds=int(elapsed))}")

@@ -4,9 +4,8 @@ State management for passive scalars.
 This module defines immutable state containers optimized for JAX.
 """
 
-from typing import Dict, NamedTuple, Optional
+from typing import NamedTuple, Optional
 
-import jax
 import jax.numpy as jnp
 from jax.tree_util import register_pytree_node
 
@@ -26,7 +25,7 @@ class PassiveScalarState(NamedTuple):
     total_source: float = 0.0
     total_dissipation: float = 0.0
 
-    def to_dict(self) -> Dict:
+    def to_dict(self) -> dict:
         """Convert to dictionary for backward compatibility.
 
         Returns:
@@ -40,7 +39,7 @@ class PassiveScalarState(NamedTuple):
         }
 
     @classmethod
-    def from_dict(cls, state_dict: Dict) -> "PassiveScalarState":
+    def from_dict(cls, state_dict: dict) -> "PassiveScalarState":
         """Create from dictionary.
 
         Args:
@@ -66,9 +65,9 @@ class MultiScalarState(NamedTuple):
         diagnostics: Dictionary of accumulated diagnostics per scalar
     """
 
-    scalars: Dict[str, jnp.ndarray]
+    scalars: dict[str, jnp.ndarray]
     time: float
-    diagnostics: Optional[Dict[str, Dict[str, float]]] = None
+    diagnostics: Optional[dict[str, dict[str, float]]] = None
 
     def get_scalar(self, name: str) -> jnp.ndarray:
         """Get a specific scalar field.

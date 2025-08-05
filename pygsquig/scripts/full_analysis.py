@@ -8,7 +8,7 @@ This script provides a full suite of analysis tools including:
 """
 
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Optional
 
 import click
 import matplotlib.pyplot as plt
@@ -19,29 +19,20 @@ import xarray as xr
 from pygsquig.core.grid import make_grid
 from pygsquig.io import load_diagnostics, load_output
 from pygsquig.utils import get_logger
-from pygsquig.utils.diagnostics import (
-    compute_energy_spectrum,
-    compute_enstrophy,
-    compute_palinstrophy,
-    compute_scalar_flux,
-    compute_total_energy,
-)
 from pygsquig.utils.plotting import (
     PlotStyle,
     create_field_animation,
     plot_diagnostic_summary,
     plot_energy_spectrum_with_analysis,
-    plot_field_slice,
     plot_time_series_multiplot,
     plot_velocity_fields,
-    plot_vorticity,
 )
 
 logger = get_logger("pygsquig.full_analysis")
 
 
 def analyze_time_series(
-    diagnostics_file: Path, output_dir: Path, plot_quantities: Optional[List[str]] = None
+    diagnostics_file: Path, output_dir: Path, plot_quantities: Optional[list[str]] = None
 ) -> pd.DataFrame:
     """Analyze and plot time series data from diagnostics file.
 
@@ -61,7 +52,7 @@ def analyze_time_series(
 
     # Determine quantities to analyze
     if plot_quantities is None:
-        plot_quantities = [k for k in diags.keys() if k != "time"]
+        plot_quantities = [k for k in diags if k != "time"]
 
     # Compute statistics
     stats_data = []
@@ -96,7 +87,7 @@ def analyze_time_series(
         energy_quantities = ["energy", "enstrophy", "palinstrophy"]
         energy_data = {q: diags[q] for q in energy_quantities if q in diags}
         if energy_data:
-            fig = plot_time_series_multiplot(
+            plot_time_series_multiplot(
                 time,
                 energy_data,
                 labels={
@@ -112,7 +103,7 @@ def analyze_time_series(
         flux_quantities = ["dissipation_rate", "energy_flux", "scalar_flux"]
         flux_data = {q: diags[q] for q in flux_quantities if q in diags}
         if flux_data:
-            fig = plot_time_series_multiplot(
+            plot_time_series_multiplot(
                 time,
                 flux_data,
                 labels={
@@ -131,8 +122,8 @@ def analyze_spectrum_evolution(
     field_dir: Path,
     output_dir: Path,
     n_snapshots: int = 5,
-    reference_slopes: Optional[Dict[str, float]] = None,
-) -> Dict[float, float]:
+    reference_slopes: Optional[dict[str, float]] = None,
+) -> dict[float, float]:
     """Analyze how the energy spectrum evolves over time.
 
     Args:
@@ -161,7 +152,7 @@ def analyze_spectrum_evolution(
 
     # Analyze each snapshot
     slopes = {}
-    for i, field_file in enumerate(selected_files):
+    for _i, field_file in enumerate(selected_files):
         # Load field
         ds = load_output(field_file)
         time = float(ds.time.values)
@@ -224,9 +215,9 @@ def analyze_spectrum_evolution(
 
 
 def create_field_snapshots(
-    field_files: List[Path],
+    field_files: list[Path],
     output_dir: Path,
-    field_names: Optional[List[str]] = None,
+    field_names: Optional[list[str]] = None,
     n_snapshots: int = 4,
 ) -> None:
     """Create snapshot plots of various fields.
@@ -299,8 +290,8 @@ def create_field_snapshots(
 def generate_analysis_report(
     output_dir: Path,
     stats_df: pd.DataFrame,
-    spectral_slopes: Dict[float, float],
-    config_info: Dict,
+    spectral_slopes: dict[float, float],
+    config_info: dict,
 ) -> None:
     """Generate a text report summarizing the analysis.
 
@@ -402,10 +393,7 @@ def main(
     simulation_dir = Path(simulation_dir)
 
     # Set up output directory
-    if output_dir is None:
-        output_dir = simulation_dir / "analysis"
-    else:
-        output_dir = Path(output_dir)
+    output_dir = simulation_dir / "analysis" if output_dir is None else Path(output_dir)
     output_dir.mkdir(exist_ok=True, parents=True)
 
     logger.info(f"Analyzing simulation in {simulation_dir}")

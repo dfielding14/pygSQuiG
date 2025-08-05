@@ -7,9 +7,8 @@ and multi-GPU support for the solver.
 
 # Simple logger setup
 import logging
-import warnings
 from functools import partial
-from typing import Any, Dict, List, Optional, Tuple, Union
+from typing import Any, Optional, Union
 
 import jax
 import jax.numpy as jnp
@@ -24,7 +23,7 @@ from pygsquig.exceptions import ConfigurationError
 logger = logging.getLogger(__name__)
 
 
-def get_available_devices(backend: Optional[str] = None) -> List[jax.Device]:
+def get_available_devices(backend: Optional[str] = None) -> list[jax.Device]:
     """Get list of available JAX devices.
 
     Args:
@@ -118,7 +117,7 @@ def device_put_with_sharding(
         return jax.device_put(array, device)
 
 
-def optimize_memory_layout(N: int) -> Dict[str, Any]:
+def optimize_memory_layout(N: int) -> dict[str, Any]:
     """Get optimal memory layout parameters for given grid size.
 
     Args:
@@ -152,7 +151,7 @@ def optimize_memory_layout(N: int) -> Dict[str, Any]:
 
 def create_sharded_grid(
     N: int, L: float, n_devices: Optional[int] = None, axis_name: str = "batch"
-) -> Tuple[Any, Mesh]:
+) -> tuple[Any, Mesh]:
     """Create grid arrays sharded across devices.
 
     Args:
@@ -268,7 +267,7 @@ class GPUOptimizedSolver:
             compute_rhs_single, axis_name="device", static_broadcasted_argnums=(1, 2, 3, 4)
         )
 
-    def step(self, state: Dict[str, Any], dt: float, **kwargs) -> Dict[str, Any]:
+    def step(self, state: dict[str, Any], dt: float, **kwargs) -> dict[str, Any]:
         """Perform optimized time step.
 
         Args:
@@ -284,7 +283,7 @@ class GPUOptimizedSolver:
         else:
             return self._step_single_gpu(state, dt, **kwargs)
 
-    def _step_single_gpu(self, state: Dict[str, Any], dt: float, **kwargs) -> Dict[str, Any]:
+    def _step_single_gpu(self, state: dict[str, Any], dt: float, **kwargs) -> dict[str, Any]:
         """Single GPU optimized step."""
         # Ensure data is on correct device
         theta_hat = jax.device_put(state["theta_hat"], self.device)
@@ -297,7 +296,7 @@ class GPUOptimizedSolver:
 
         return new_state
 
-    def _step_multi_gpu(self, state: Dict[str, Any], dt: float, **kwargs) -> Dict[str, Any]:
+    def _step_multi_gpu(self, state: dict[str, Any], dt: float, **kwargs) -> dict[str, Any]:
         """Multi-GPU parallel step."""
         # This is a simplified version - full implementation would
         # shard the computation across devices
@@ -308,7 +307,7 @@ class GPUOptimizedSolver:
         logger.warning("Full multi-GPU domain decomposition not yet implemented")
         return self._step_single_gpu(state, dt, **kwargs)
 
-    def get_memory_usage(self) -> Dict[str, float]:
+    def get_memory_usage(self) -> dict[str, float]:
         """Get current GPU memory usage.
 
         Returns:
@@ -345,8 +344,8 @@ class GPUOptimizedSolver:
 
 
 def benchmark_gpu_performance(
-    grid_sizes: List[int] = [128, 256, 512, 1024], device_type: str = "auto"
-) -> Dict[str, Any]:
+    grid_sizes: list[int] = None, device_type: str = "auto"
+) -> dict[str, Any]:
     """Benchmark solver performance on different grid sizes.
 
     Args:
@@ -362,6 +361,8 @@ def benchmark_gpu_performance(
     from pygsquig.core.solver import gSQGSolver
 
     # Setup device
+    if grid_sizes is None:
+        grid_sizes = [128, 256, 512, 1024]
     device = setup_device(device_type)
 
     results = {

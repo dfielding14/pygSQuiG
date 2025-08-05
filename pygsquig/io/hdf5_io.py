@@ -8,7 +8,7 @@ import json
 import subprocess
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple, Union
+from typing import Any, Union
 
 import h5py
 import jax.numpy as jnp
@@ -19,7 +19,7 @@ from ..core.grid import Grid
 from .config import RunConfig
 
 
-def _get_git_info() -> Dict[str, str]:
+def _get_git_info() -> dict[str, str]:
     """Get current git commit hash and status."""
     try:
         commit = (
@@ -47,7 +47,7 @@ def _get_git_info() -> Dict[str, str]:
 
 
 def save_checkpoint(
-    state: Dict[str, Any],
+    state: dict[str, Any],
     config: RunConfig,
     filename: Union[str, Path],
     compression: str = "gzip",
@@ -123,7 +123,7 @@ def save_checkpoint(
                     state_group.attrs[key] = value
 
 
-def load_checkpoint(filename: Union[str, Path]) -> Tuple[Dict[str, Any], RunConfig]:
+def load_checkpoint(filename: Union[str, Path]) -> tuple[dict[str, Any], RunConfig]:
     """Load simulation checkpoint from HDF5 file.
 
     Args:
@@ -157,7 +157,7 @@ def load_checkpoint(filename: Union[str, Path]) -> Tuple[Dict[str, Any], RunConf
         }
 
         # Load any additional state variables
-        for key in state_group.keys():
+        for key in state_group:
             if key not in ["theta_hat_real", "theta_hat_imag"]:
                 if key.endswith("_real"):
                     # Complex array
@@ -179,10 +179,10 @@ def load_checkpoint(filename: Union[str, Path]) -> Tuple[Dict[str, Any], RunConf
 
 
 def save_output(
-    data: Dict[str, jnp.ndarray],
+    data: dict[str, jnp.ndarray],
     grid: Grid,
     time: float,
-    metadata: Dict[str, Any],
+    metadata: dict[str, Any],
     filename: Union[str, Path],
     compress: bool = True,
 ) -> None:
@@ -269,7 +269,7 @@ def load_output(filename: Union[str, Path]) -> xr.Dataset:
 
 
 def save_diagnostics(
-    diagnostics: Dict[str, Union[np.ndarray, float]],
+    diagnostics: dict[str, Union[np.ndarray, float]],
     time: float,
     filename: Union[str, Path],
     mode: str = "append",
@@ -301,7 +301,7 @@ def save_diagnostics(
                         else:
                             # Array diagnostic (e.g., spectrum)
                             arr = np.array(value)
-                            shape = (1,) + arr.shape
+                            (1,) + arr.shape
                             maxshape = (None,) + arr.shape
                             f.create_dataset(
                                 name, data=arr[np.newaxis, ...], maxshape=maxshape, chunks=True
@@ -341,7 +341,7 @@ def save_diagnostics(
                             dset[-1, ...] = arr
 
 
-def load_diagnostics(filename: Union[str, Path]) -> Dict[str, np.ndarray]:
+def load_diagnostics(filename: Union[str, Path]) -> dict[str, np.ndarray]:
     """Load diagnostic data from HDF5 file.
 
     Args:
@@ -353,7 +353,7 @@ def load_diagnostics(filename: Union[str, Path]) -> Dict[str, np.ndarray]:
     diagnostics = {}
 
     with h5py.File(filename, "r") as f:
-        for key in f.keys():
+        for key in f:
             diagnostics[key] = f[key][:]
 
     return diagnostics

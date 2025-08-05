@@ -1,7 +1,7 @@
 """Animation functions for pygSQuiG simulations."""
 
 from pathlib import Path
-from typing import List, Optional, Tuple
+from typing import Optional
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -12,12 +12,12 @@ from .style import PlotStyle
 
 
 def create_field_animation(
-    field_files: List[Path],
+    field_files: list[Path],
     field_name: str = "theta",
     output_path: Optional[Path] = None,
     fps: int = 10,
     dpi: int = 100,
-    figsize: Optional[Tuple[float, float]] = None,
+    figsize: Optional[tuple[float, float]] = None,
 ) -> FuncAnimation:
     """Create an animation from a series of field files.
 
@@ -38,7 +38,7 @@ def create_field_animation(
     # Load first file to get grid info
     ds0 = xr.open_dataset(field_files[0])
     N = ds0.attrs["N"]
-    L = ds0.attrs["L"]
+    ds0.attrs["L"]
     x = ds0.x.values
     y = ds0.y.values
 
@@ -88,12 +88,12 @@ def create_field_animation(
 
 
 def create_vorticity_animation(
-    field_files: List[Path],
+    field_files: list[Path],
     alpha: float,
     output_path: Optional[Path] = None,
     fps: int = 10,
     dpi: int = 100,
-    figsize: Optional[Tuple[float, float]] = None,
+    figsize: Optional[tuple[float, float]] = None,
 ) -> FuncAnimation:
     """Create an animation of vorticity evolution.
 
@@ -160,7 +160,7 @@ def create_vorticity_animation(
     title = ax.set_title("")
 
     cbar = plt.colorbar(im, ax=ax)
-    cbar.ax.set_ylabel(f"Vorticity q", rotation=270, labelpad=20)
+    cbar.ax.set_ylabel("Vorticity q", rotation=270, labelpad=20)
 
     def update(frame):
         """Update function for animation."""
@@ -187,12 +187,12 @@ def create_vorticity_animation(
 
 
 def create_spectrum_animation(
-    field_files: List[Path],
+    field_files: list[Path],
     alpha: float,
     output_path: Optional[Path] = None,
     fps: int = 5,
     dpi: int = 100,
-    figsize: Optional[Tuple[float, float]] = None,
+    figsize: Optional[tuple[float, float]] = None,
 ) -> FuncAnimation:
     """Create an animation of spectrum evolution.
 

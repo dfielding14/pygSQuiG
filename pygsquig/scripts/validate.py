@@ -15,7 +15,7 @@ import numpy as np
 
 from pygsquig.core.grid import fft2, ifft2, make_grid
 from pygsquig.core.solver import gSQGSolver
-from pygsquig.utils.diagnostics import compute_energy_spectrum, compute_total_energy
+from pygsquig.utils.diagnostics import compute_energy_spectrum
 
 
 def compute_energy_sqg(theta_hat, grid):
@@ -199,7 +199,7 @@ def plot_results(times, energies, k_bins, E_k, slope):
         k_ref = k_bins[(k_bins > 10) & (k_bins < 40)]
         if len(k_ref) > 0:
             E_ref = E_k[k_bins == k_ref[0]][0] * (k_ref / k_ref[0]) ** (-5 / 3)
-            ax2.loglog(k_ref, E_ref, "r--", linewidth=2, label=f"k^(-5/3) reference")
+            ax2.loglog(k_ref, E_ref, "r--", linewidth=2, label="k^(-5/3) reference")
 
         ax2.set_xlabel("Wavenumber k")
         ax2.set_ylabel("Energy Spectrum E(k)")

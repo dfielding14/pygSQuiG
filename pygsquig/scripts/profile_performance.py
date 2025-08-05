@@ -7,11 +7,9 @@ to identify bottlenecks and optimization opportunities.
 """
 
 import time
-from functools import partial
 from pathlib import Path
 
 import jax
-import jax.numpy as jnp
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -22,7 +20,6 @@ from pygsquig.core.operators import (
     gradient,
     jacobian,
     laplacian,
-    perpendicular_gradient,
 )
 from pygsquig.core.solver import gSQGSolver
 from pygsquig.forcing.damping import CombinedDamping
@@ -261,12 +258,12 @@ class PerformanceProfiler:
         # Breakdown
         rhs_time = solver_results["rhs"]
         overhead = total_step_time - rhs_time
-        print(f"\nTime breakdown:")
+        print("\nTime breakdown:")
         print(f"  RHS computation: {rhs_time/total_step_time*100:.1f}%")
         print(f"  RK4 overhead:    {overhead/total_step_time*100:.1f}%")
 
         # Identify bottlenecks
-        print(f"\nMain bottlenecks:")
+        print("\nMain bottlenecks:")
         print(
             f"  Jacobian:     {operator_results['jacobian']*1000:.2f} ms ({operator_results['jacobian']/rhs_time*100:.0f}% of RHS)"
         )

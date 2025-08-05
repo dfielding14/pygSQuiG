@@ -8,7 +8,6 @@ import time
 from pathlib import Path
 
 import jax
-import jax.numpy as jnp
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -48,7 +47,7 @@ def run_forced_sqg_simulation():
     n_spinup = 10000  # Spin-up steps
     n_stats = 5000  # Steps for statistics
 
-    print(f"\nParameters:")
+    print("\nParameters:")
     print(f"  Resolution: {N}x{N}")
     print(f"  Forcing at kf={kf:.0f} with ε={epsilon}")
     print(f"  Hyperviscosity: ν_p={solver.nu_p:.2e}, p={solver.p}")
@@ -109,7 +108,7 @@ def run_forced_sqg_simulation():
     log_E = np.log(E_inertial + 1e-20)
     slope, intercept = np.polyfit(log_k, log_E, 1)
 
-    print(f"\nResults:")
+    print("\nResults:")
     print(f"  Inertial range: k ∈ [{k[inertial_start]:.0f}, {k[inertial_end]:.0f}]")
     print(f"  Measured slope: {slope:.3f}")
     print(f"  Expected SQG slope: -5/3 ≈ {-5/3:.3f}")
