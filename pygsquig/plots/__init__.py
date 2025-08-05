@@ -10,27 +10,23 @@ This package provides comprehensive visualization tools split into modules:
 """
 
 # Import all functions for backward compatibility
-from .style import PlotStyle
-
-from .fields import plot_field_slice, plot_vorticity, plot_velocity_fields, plot_diagnostic_summary
-
-from .spectra import (
-    plot_energy_spectrum_with_analysis,
-    plot_spectrum_evolution,
-    plot_compensated_spectrum,
-)
-
-from .timeseries import (
-    plot_time_series_multiplot,
-    plot_energy_balance,
-    plot_conservation_check,
-    plot_regime_evolution,
-)
-
 from .animations import (
     create_field_animation,
-    create_vorticity_animation,
     create_spectrum_animation,
+    create_vorticity_animation,
+)
+from .fields import plot_diagnostic_summary, plot_field_slice, plot_velocity_fields, plot_vorticity
+from .spectra import (
+    plot_compensated_spectrum,
+    plot_energy_spectrum_with_analysis,
+    plot_spectrum_evolution,
+)
+from .style import PlotStyle
+from .timeseries import (
+    plot_conservation_check,
+    plot_energy_balance,
+    plot_regime_evolution,
+    plot_time_series_multiplot,
 )
 
 __all__ = [

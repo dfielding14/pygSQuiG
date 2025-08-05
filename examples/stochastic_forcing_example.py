@@ -5,22 +5,22 @@ This script demonstrates various random forcing patterns including
 white noise, colored noise, vortex injection, and OU processes.
 """
 
-import numpy as np
 import jax
 import jax.numpy as jnp
 import matplotlib.pyplot as plt
+import numpy as np
 from matplotlib.animation import FuncAnimation
 
-from pygsquig.core.grid import make_grid
-from pygsquig.core.solver import gSQGSolver
-from pygsquig.core.diagnostics import compute_energy_spectrum, compute_total_energy
 from pygsquig.core.adaptive_solver import AdaptivegSQGSolver
 from pygsquig.core.adaptive_timestep import CFLConfig
+from pygsquig.core.diagnostics import compute_energy_spectrum, compute_total_energy
+from pygsquig.core.grid import make_grid
+from pygsquig.core.solver import gSQGSolver
 from pygsquig.forcing.stochastic_forcing import (
-    WhiteNoiseForcing,
     ColoredNoiseForcing,
-    StochasticVortexForcing,
     OrnsteinUhlenbeckForcing,
+    StochasticVortexForcing,
+    WhiteNoiseForcing,
     create_combined_stochastic_forcing,
 )
 

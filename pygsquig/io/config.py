@@ -6,10 +6,11 @@ Configuration files are written in YAML and converted to these dataclasses.
 """
 
 from dataclasses import dataclass, field
-from typing import Optional, List, Union
-import yaml
 from pathlib import Path
+from typing import List, Optional, Union
+
 import numpy as np
+import yaml
 
 
 @dataclass

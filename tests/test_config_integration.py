@@ -1,13 +1,14 @@
 """Test integration of simplified config with existing code."""
 
-import pytest
 import tempfile
 from pathlib import Path
 
-from pygsquig.io import Config, adapt_config
+import pytest
+
 from pygsquig.core.grid import make_grid
 from pygsquig.core.solver import gSQGSolver
 from pygsquig.forcing.ring_forcing import RingForcing
+from pygsquig.io import Config, adapt_config
 
 
 class TestConfigIntegration:

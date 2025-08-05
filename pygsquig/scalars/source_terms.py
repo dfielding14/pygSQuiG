@@ -6,8 +6,8 @@ localized sources, and chemical reactions.
 """
 
 from abc import ABC, abstractmethod
-from typing import Optional, Callable
 from dataclasses import dataclass
+from typing import Callable, Optional
 
 import jax
 import jax.numpy as jnp

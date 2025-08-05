@@ -4,11 +4,11 @@ This module provides a simpler alternative to the complex dataclass-based
 configuration system, using a single Config class with schema validation.
 """
 
-from typing import Dict, Any, Optional, Union
 from pathlib import Path
-import yaml
-import numpy as np
+from typing import Any, Dict, Optional, Union
 
+import numpy as np
+import yaml
 
 # Default configuration template
 DEFAULT_CONFIG = {

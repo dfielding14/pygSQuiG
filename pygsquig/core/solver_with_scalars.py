@@ -5,17 +5,17 @@ This module extends the base gSQG solver to include passive scalar
 evolution capabilities while maintaining backward compatibility.
 """
 
-from typing import Dict, Optional, Callable, Any, Union
 from dataclasses import dataclass
+from typing import Any, Callable, Dict, Optional, Union
 
 import jax
 import jax.numpy as jnp
 
-from pygsquig.core.solver import gSQGSolver, State
 from pygsquig.core.grid import fft2
-from pygsquig.scalars.passive_scalar import PassiveScalarEvolver, MultiSpeciesEvolver
-from pygsquig.scalars.state import MultiScalarState
+from pygsquig.core.solver import State, gSQGSolver
 from pygsquig.exceptions import ConfigurationError
+from pygsquig.scalars.passive_scalar import MultiSpeciesEvolver, PassiveScalarEvolver
+from pygsquig.scalars.state import MultiScalarState
 
 
 @dataclass

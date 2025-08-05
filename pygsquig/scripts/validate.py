@@ -5,14 +5,15 @@ This script runs standard test cases to validate the solver implementation
 against known physical behaviors and theoretical predictions.
 """
 
-import numpy as np
+import time
+from pathlib import Path
+
 import jax
 import jax.numpy as jnp
 import matplotlib.pyplot as plt
-from pathlib import Path
-import time
+import numpy as np
 
-from pygsquig.core.grid import make_grid, fft2, ifft2
+from pygsquig.core.grid import fft2, ifft2, make_grid
 from pygsquig.core.solver import gSQGSolver
 from pygsquig.utils.diagnostics import compute_energy_spectrum, compute_total_energy
 

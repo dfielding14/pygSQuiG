@@ -5,8 +5,9 @@ This module implements various random forcing patterns including
 white noise, colored noise, and stochastic vortex injection.
 """
 
-from typing import Optional, Union, Tuple
 from abc import ABC, abstractmethod
+from typing import Optional, Tuple, Union
+
 import jax
 import jax.numpy as jnp
 from jax import Array

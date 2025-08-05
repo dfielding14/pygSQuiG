@@ -4,11 +4,12 @@ This module provides functions to compute various diagnostic quantities
 such as energy spectra, fluxes, and other relevant statistics.
 """
 
-import numpy as np
+from functools import partial
+from typing import Optional, Tuple
+
 import jax
 import jax.numpy as jnp
-from typing import Tuple, Optional
-from functools import partial
+import numpy as np
 
 from ..core.grid import Grid
 from ..core.operators import (

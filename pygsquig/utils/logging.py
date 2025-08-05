@@ -4,12 +4,12 @@ This module provides structured logging capabilities with support for
 both console and file output, progress tracking, and performance monitoring.
 """
 
+import json
 import logging
 import sys
-from pathlib import Path
-from typing import Optional, Dict, Any
 from datetime import datetime
-import json
+from pathlib import Path
+from typing import Any, Dict, Optional
 
 
 class SimulationLogger:

@@ -1,7 +1,8 @@
 """Plot styling configuration for pygSQuiG visualizations."""
 
-import matplotlib.pyplot as plt
 from typing import Tuple
+
+import matplotlib.pyplot as plt
 
 
 class PlotStyle:

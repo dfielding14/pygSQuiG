@@ -4,12 +4,14 @@ Benchmark script to measure JIT compilation performance improvement.
 """
 
 import time
+
 import jax
 import jax.numpy as jnp
 import numpy as np
+
 from pygsquig.core.grid import make_grid
+from pygsquig.core.operators import compute_velocity_from_theta, gradient, jacobian
 from pygsquig.core.solver import gSQGSolver
-from pygsquig.core.operators import compute_velocity_from_theta, jacobian, gradient
 
 
 def benchmark_operator(name: str, func, *args, n_warmup: int = 3, n_runs: int = 10):

@@ -4,7 +4,8 @@ State management for passive scalars.
 This module defines immutable state containers optimized for JAX.
 """
 
-from typing import NamedTuple, Dict, Optional
+from typing import Dict, NamedTuple, Optional
+
 import jax
 import jax.numpy as jnp
 from jax.tree_util import register_pytree_node

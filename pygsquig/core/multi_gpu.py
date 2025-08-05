@@ -5,19 +5,20 @@ This module provides domain decomposition and ensemble parallelism
 across multiple GPUs using pmap and shard_map.
 """
 
-from typing import Dict, List, Tuple, Optional, Callable, Any
-from dataclasses import dataclass
 import functools
+from dataclasses import dataclass
+from typing import Any, Callable, Dict, List, Optional, Tuple
 
 import jax
 import jax.numpy as jnp
+import numpy as np
 from jax import Array
-from jax.sharding import Mesh, PartitionSpec as P, NamedSharding
 from jax.experimental import mesh_utils
 from jax.experimental.shard_map import shard_map
-import numpy as np
+from jax.sharding import Mesh, NamedSharding
+from jax.sharding import PartitionSpec as P
 
-from pygsquig.core.grid import Grid, make_grid, fft2, ifft2
+from pygsquig.core.grid import Grid, fft2, ifft2, make_grid
 from pygsquig.exceptions import ConfigurationError
 
 
@@ -103,7 +104,7 @@ class MultiGPUSolver:
 
     def _setup_parallel_functions(self):
         """Create parallelized versions of core functions."""
-        from pygsquig.core.operators import compute_velocity_from_theta, jacobian, hyperviscosity
+        from pygsquig.core.operators import compute_velocity_from_theta, hyperviscosity, jacobian
         from pygsquig.core.time_integrator import rk4_step
 
         if self.config.ensemble_size is not None:

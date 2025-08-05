@@ -2,13 +2,13 @@
 Tests for damping module.
 """
 
-import numpy as np
 import jax
 import jax.numpy as jnp
+import numpy as np
 import pytest
 
-from pygsquig.core.grid import make_grid, fft2, ifft2
-from pygsquig.forcing.damping import large_scale_damping, hyperviscosity, CombinedDamping
+from pygsquig.core.grid import fft2, ifft2, make_grid
+from pygsquig.forcing.damping import CombinedDamping, hyperviscosity, large_scale_damping
 
 
 class TestLargeScaleDamping:

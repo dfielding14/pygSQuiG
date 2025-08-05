@@ -5,21 +5,21 @@ This module provides a solver wrapper that automatically adjusts
 timesteps based on stability criteria.
 """
 
-from typing import Dict, Optional, Callable, Any, Tuple
 import time as pytime
+from typing import Any, Callable, Dict, Optional, Tuple
 
 import jax
 import jax.numpy as jnp
 from jax import Array
 
-from pygsquig.core.grid import Grid
-from pygsquig.core.solver import gSQGSolver, State
-from pygsquig.core.operators import compute_velocity_from_theta
 from pygsquig.core.adaptive_timestep import (
     AdaptiveTimestepper,
     CFLConfig,
     estimate_initial_timestep,
 )
+from pygsquig.core.grid import Grid
+from pygsquig.core.operators import compute_velocity_from_theta
+from pygsquig.core.solver import State, gSQGSolver
 from pygsquig.exceptions import NumericalError
 
 
@@ -310,6 +310,7 @@ class AdaptivegSQGSolver:
 def adaptive_solver_example():
     """Example usage of adaptive solver."""
     import numpy as np
+
     from pygsquig.core.grid import make_grid
     from pygsquig.forcing.ring_forcing import RingForcing
 

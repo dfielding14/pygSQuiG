@@ -2,17 +2,17 @@
 Tests for time integration module.
 """
 
-import numpy as np
 import jax
 import jax.numpy as jnp
+import numpy as np
 import pytest
 
 from pygsquig.core.time_integrator import (
-    rk4_step,
-    ssp_rk3_step,
+    adaptive_timestep,
     compute_cfl,
     compute_diffusion_timestep,
-    adaptive_timestep,
+    rk4_step,
+    ssp_rk3_step,
 )
 
 

@@ -5,8 +5,8 @@ This module provides the Grid dataclass and associated functions for managing
 spatial discretization and spectral operations in doubly-periodic domains.
 """
 
-from typing import Tuple, Any
 from functools import partial
+from typing import Any, Tuple
 
 import jax
 import jax.numpy as jnp

@@ -5,6 +5,7 @@ and existing code that expects the complex dataclass-based configurations.
 """
 
 from typing import Any, Optional
+
 from .simple_config import Config
 
 

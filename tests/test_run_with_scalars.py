@@ -5,17 +5,18 @@ This module tests the integration of passive scalars
 into the main simulation runner script.
 """
 
-import pytest
-import tempfile
 import shutil
+import tempfile
 from pathlib import Path
-import yaml
+
 import h5py
+import pytest
 import xarray as xr
+import yaml
 from click.testing import CliRunner
 
-from pygsquig.scripts.run import main
 from pygsquig.io.config import RunConfig
+from pygsquig.scripts.run import main
 
 
 @pytest.fixture

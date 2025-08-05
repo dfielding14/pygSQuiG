@@ -109,6 +109,8 @@ select = [
 ignore = [
     "E501",  # line too long (handled by black)
     "E731",  # lambda assignment
+    "N803",  # argument name should be lowercase (allow N for grid size)
+    "N806",  # variable in function should be lowercase (allow math conventions like N, L, E_k)
 ]
 
 [tool.mypy]

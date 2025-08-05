@@ -1,10 +1,11 @@
 """Test plotting module refactoring works correctly."""
 
-import pytest
-import numpy as np
-import jax.numpy as jnp
-from pathlib import Path
 import tempfile
+from pathlib import Path
+
+import jax.numpy as jnp
+import numpy as np
+import pytest
 
 from pygsquig.core.grid import make_grid
 from pygsquig.core.operators import fractional_laplacian
@@ -32,13 +33,13 @@ class TestPlottingRefactor:
         """Test direct imports from plots package."""
         from pygsquig.plots import (
             PlotStyle,
-            plot_field_slice,
-            plot_vorticity,
-            plot_velocity_fields,
-            plot_energy_spectrum_with_analysis,
-            plot_diagnostic_summary,
-            plot_time_series_multiplot,
             create_field_animation,
+            plot_diagnostic_summary,
+            plot_energy_spectrum_with_analysis,
+            plot_field_slice,
+            plot_time_series_multiplot,
+            plot_velocity_fields,
+            plot_vorticity,
         )
 
         # Check all imports are callable
@@ -51,13 +52,13 @@ class TestPlottingRefactor:
         """Test backward compatibility imports from utils."""
         from pygsquig.utils import (
             PlotStyle,
-            plot_field_slice,
-            plot_vorticity,
-            plot_velocity_fields,
-            plot_energy_spectrum_with_analysis,
-            plot_diagnostic_summary,
-            plot_time_series_multiplot,
             create_field_animation,
+            plot_diagnostic_summary,
+            plot_energy_spectrum_with_analysis,
+            plot_field_slice,
+            plot_time_series_multiplot,
+            plot_velocity_fields,
+            plot_vorticity,
         )
 
         # Check all imports work
@@ -66,11 +67,11 @@ class TestPlottingRefactor:
 
     def test_submodule_imports(self):
         """Test imports from individual submodules."""
-        from pygsquig.plots.style import PlotStyle
+        from pygsquig.plots.animations import create_field_animation
         from pygsquig.plots.fields import plot_field_slice, plot_vorticity
         from pygsquig.plots.spectra import plot_energy_spectrum_with_analysis
+        from pygsquig.plots.style import PlotStyle
         from pygsquig.plots.timeseries import plot_time_series_multiplot
-        from pygsquig.plots.animations import create_field_animation
 
         # Verify imports
         assert PlotStyle.DPI == 150
@@ -169,13 +170,13 @@ class TestPlottingRefactor:
     def test_new_functions_available(self):
         """Test new functions added during refactoring are available."""
         from pygsquig.plots import (
-            plot_spectrum_evolution,
-            plot_compensated_spectrum,
-            plot_energy_balance,
-            plot_conservation_check,
-            plot_regime_evolution,
-            create_vorticity_animation,
             create_spectrum_animation,
+            create_vorticity_animation,
+            plot_compensated_spectrum,
+            plot_conservation_check,
+            plot_energy_balance,
+            plot_regime_evolution,
+            plot_spectrum_evolution,
         )
 
         # Check all new functions are callable

@@ -7,35 +7,35 @@ This script provides a full suite of analysis tools including:
 - Summary statistics and reports
 """
 
-import click
-import numpy as np
-import matplotlib.pyplot as plt
 from pathlib import Path
-import xarray as xr
-import pandas as pd
-from typing import Optional, List, Dict, Tuple
+from typing import Dict, List, Optional, Tuple
 
-from pygsquig.io import load_diagnostics, load_output
+import click
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+import xarray as xr
+
 from pygsquig.core.grid import make_grid
+from pygsquig.io import load_diagnostics, load_output
+from pygsquig.utils import get_logger
 from pygsquig.utils.diagnostics import (
     compute_energy_spectrum,
-    compute_total_energy,
     compute_enstrophy,
     compute_palinstrophy,
     compute_scalar_flux,
+    compute_total_energy,
 )
 from pygsquig.utils.plotting import (
-    plot_field_slice,
-    plot_vorticity,
-    plot_velocity_fields,
-    plot_energy_spectrum_with_analysis,
-    plot_diagnostic_summary,
-    plot_time_series_multiplot,
-    create_field_animation,
     PlotStyle,
+    create_field_animation,
+    plot_diagnostic_summary,
+    plot_energy_spectrum_with_analysis,
+    plot_field_slice,
+    plot_time_series_multiplot,
+    plot_velocity_fields,
+    plot_vorticity,
 )
-from pygsquig.utils import get_logger
-
 
 logger = get_logger("pygsquig.full_analysis")
 

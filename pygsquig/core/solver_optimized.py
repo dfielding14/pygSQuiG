@@ -5,8 +5,8 @@ This module provides an optimized version of the gSQG solver that uses
 JAX-specific optimizations for better performance.
 """
 
-from typing import Dict, Optional, Callable, Any, Tuple
 from functools import partial
+from typing import Any, Callable, Dict, Optional, Tuple
 
 import jax
 import jax.numpy as jnp

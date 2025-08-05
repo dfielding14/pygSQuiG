@@ -2,20 +2,20 @@
 Tests for spectral operators module.
 """
 
-import numpy as np
 import jax
 import jax.numpy as jnp
+import numpy as np
 import pytest
 
-from pygsquig.core.grid import make_grid, fft2, ifft2
+from pygsquig.core.grid import fft2, ifft2, make_grid
 from pygsquig.core.operators import (
-    gradient,
-    laplacian,
-    fractional_laplacian,
-    perpendicular_gradient,
-    jacobian,
     compute_streamfunction,
     compute_velocity_from_theta,
+    fractional_laplacian,
+    gradient,
+    jacobian,
+    laplacian,
+    perpendicular_gradient,
 )
 
 

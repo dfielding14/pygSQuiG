@@ -6,9 +6,10 @@ parameters throughout the codebase.
 """
 
 from functools import wraps
-from typing import Union, Callable
-import numpy as np
+from typing import Callable, Union
+
 import jax.numpy as jnp
+import numpy as np
 
 from pygsquig.exceptions import ValidationError
 

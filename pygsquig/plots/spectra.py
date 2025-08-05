@@ -1,9 +1,10 @@
 """Spectrum analysis plotting functions for pygSQuiG simulations."""
 
-import numpy as np
-import matplotlib.pyplot as plt
 from pathlib import Path
-from typing import Optional, Tuple, Dict
+from typing import Dict, Optional, Tuple
+
+import matplotlib.pyplot as plt
+import numpy as np
 
 from ..core.grid import Grid
 from ..utils.diagnostics import compute_energy_spectrum

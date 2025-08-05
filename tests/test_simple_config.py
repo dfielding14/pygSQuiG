@@ -1,12 +1,13 @@
 """Tests for simplified configuration system."""
 
-import pytest
 import tempfile
 from pathlib import Path
+
+import pytest
 import yaml
 
-from pygsquig.io.simple_config import Config, load_config
 from pygsquig.io.config_adapter import adapt_config, dataclass_to_config
+from pygsquig.io.simple_config import Config, load_config
 
 
 class TestSimpleConfig:

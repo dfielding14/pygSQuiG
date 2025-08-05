@@ -5,21 +5,21 @@ This module provides device management, memory optimization,
 and multi-GPU support for the solver.
 """
 
-from typing import Optional, List, Tuple, Dict, Any, Union
-from functools import partial
+# Simple logger setup
+import logging
 import warnings
+from functools import partial
+from typing import Any, Dict, List, Optional, Tuple, Union
 
 import jax
 import jax.numpy as jnp
-from jax import Array
-from jax.sharding import Mesh, PartitionSpec as P
-from jax.experimental import mesh_utils
 import numpy as np
+from jax import Array
+from jax.experimental import mesh_utils
+from jax.sharding import Mesh
+from jax.sharding import PartitionSpec as P
 
 from pygsquig.exceptions import ConfigurationError
-
-# Simple logger setup
-import logging
 
 logger = logging.getLogger(__name__)
 
@@ -356,9 +356,10 @@ def benchmark_gpu_performance(
     Returns:
         Dictionary with benchmark results
     """
+    import time
+
     from pygsquig.core.grid import make_grid
     from pygsquig.core.solver import gSQGSolver
-    import time
 
     # Setup device
     device = setup_device(device_type)

@@ -9,20 +9,21 @@ This example demonstrates:
 4. Performance benchmarking
 """
 
-import numpy as np
-import jax
-import jax.numpy as jnp
 import time
 
-from pygsquig.core.grid import make_grid
-from pygsquig.core.solver import gSQGSolver
+import jax
+import jax.numpy as jnp
+import numpy as np
+
 from pygsquig.core.gpu_utils import (
-    setup_device,
-    optimize_memory_layout,
     GPUOptimizedSolver,
     benchmark_gpu_performance,
+    optimize_memory_layout,
+    setup_device,
 )
+from pygsquig.core.grid import make_grid
 from pygsquig.core.multi_gpu import MultiGPUSolver, ParallelConfig, ensemble_statistics
+from pygsquig.core.solver import gSQGSolver
 from pygsquig.forcing.ring_forcing import RingForcing
 from pygsquig.utils.diagnostics import compute_energy_spectrum
 

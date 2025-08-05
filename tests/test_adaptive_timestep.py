@@ -5,24 +5,24 @@ This module tests the adaptive timestep selection and
 stability monitoring functionality.
 """
 
-import pytest
-import numpy as np
 import jax
 import jax.numpy as jnp
+import numpy as np
+import pytest
 
-from pygsquig.core.grid import make_grid
+from pygsquig.core.adaptive_solver import AdaptivegSQGSolver
 from pygsquig.core.adaptive_timestep import (
+    AdaptiveTimestepper,
     CFLConfig,
-    compute_max_velocity,
     compute_advection_cfl,
     compute_diffusion_cfl,
+    compute_max_velocity,
     compute_timestep,
-    AdaptiveTimestepper,
     estimate_initial_timestep,
 )
-from pygsquig.core.adaptive_solver import AdaptivegSQGSolver
-from pygsquig.core.solver import gSQGSolver
+from pygsquig.core.grid import make_grid
 from pygsquig.core.operators import compute_velocity_from_theta
+from pygsquig.core.solver import gSQGSolver
 
 
 class TestCFLConfig:

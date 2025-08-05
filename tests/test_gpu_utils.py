@@ -5,22 +5,22 @@ This module tests device management, memory optimization,
 and performance features.
 """
 
-import pytest
-import numpy as np
 import jax
 import jax.numpy as jnp
+import numpy as np
+import pytest
 
-from pygsquig.core.grid import make_grid
-from pygsquig.core.solver import gSQGSolver
 from pygsquig.core.gpu_utils import (
-    get_available_devices,
-    setup_device,
-    optimize_memory_layout,
-    device_put_with_sharding,
     GPUOptimizedSolver,
     benchmark_gpu_performance,
+    device_put_with_sharding,
+    get_available_devices,
     gpu_optimized,
+    optimize_memory_layout,
+    setup_device,
 )
+from pygsquig.core.grid import make_grid
+from pygsquig.core.solver import gSQGSolver
 from pygsquig.exceptions import ConfigurationError
 
 

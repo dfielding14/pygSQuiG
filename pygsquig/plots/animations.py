@@ -1,11 +1,12 @@
 """Animation functions for pygSQuiG simulations."""
 
-import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib.animation import FuncAnimation
 from pathlib import Path
-from typing import Optional, Tuple, List
+from typing import List, Optional, Tuple
+
+import matplotlib.pyplot as plt
+import numpy as np
 import xarray as xr
+from matplotlib.animation import FuncAnimation
 
 from .style import PlotStyle
 
@@ -111,7 +112,7 @@ def create_vorticity_animation(
         figsize = PlotStyle.FIGSIZE_SINGLE
 
     # Import needed functions
-    from ..core.grid import make_grid, ifft2
+    from ..core.grid import ifft2, make_grid
     from ..core.operators import fractional_laplacian
 
     # Load first file to get grid info

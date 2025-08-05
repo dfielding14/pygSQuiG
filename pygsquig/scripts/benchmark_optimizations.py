@@ -4,10 +4,11 @@ Benchmark script comparing original and optimized solvers.
 """
 
 import time
-import numpy as np
+from pathlib import Path
+
 import jax
 import matplotlib.pyplot as plt
-from pathlib import Path
+import numpy as np
 
 from pygsquig.core.grid import make_grid
 from pygsquig.core.solver import gSQGSolver

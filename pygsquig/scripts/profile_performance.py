@@ -6,26 +6,27 @@ This script profiles the computational performance of different solver component
 to identify bottlenecks and optimization opportunities.
 """
 
-import numpy as np
-import jax
-import jax.numpy as jnp
 import time
 from functools import partial
-import matplotlib.pyplot as plt
 from pathlib import Path
 
-from pygsquig.core.grid import make_grid, fft2, ifft2
-from pygsquig.core.solver import gSQGSolver
+import jax
+import jax.numpy as jnp
+import matplotlib.pyplot as plt
+import numpy as np
+
+from pygsquig.core.grid import fft2, ifft2, make_grid
 from pygsquig.core.operators import (
     compute_velocity_from_theta,
-    jacobian,
-    laplacian,
     fractional_laplacian,
     gradient,
+    jacobian,
+    laplacian,
     perpendicular_gradient,
 )
-from pygsquig.forcing.ring_forcing import RingForcing
+from pygsquig.core.solver import gSQGSolver
 from pygsquig.forcing.damping import CombinedDamping
+from pygsquig.forcing.ring_forcing import RingForcing
 
 
 class PerformanceProfiler:

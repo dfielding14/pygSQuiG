@@ -4,13 +4,14 @@ These tests ensure that JIT compilation doesn't break functionality
 and actually improves performance.
 """
 
-import pytest
-import numpy as np
-import jax
-import jax.numpy as jnp
 import time
 
-from pygsquig.core.grid import make_grid, fft2, ifft2
+import jax
+import jax.numpy as jnp
+import numpy as np
+import pytest
+
+from pygsquig.core.grid import fft2, ifft2, make_grid
 
 
 class TestGridJIT:

@@ -5,17 +5,17 @@ This module provides adaptive timestep selection based on the
 Courant-Friedrichs-Lewy (CFL) condition and other stability criteria.
 """
 
-from typing import Dict, Tuple, Optional, Any
-from dataclasses import dataclass
 import warnings
+from dataclasses import dataclass
+from typing import Any, Dict, Optional, Tuple
 
 import jax
 import jax.numpy as jnp
 from jax import Array
 
 from pygsquig.core.grid import Grid
-from pygsquig.validation import validate_timestep
 from pygsquig.exceptions import NumericalError
+from pygsquig.validation import validate_timestep
 
 
 @dataclass

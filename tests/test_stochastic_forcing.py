@@ -5,20 +5,20 @@ This module tests white noise, colored noise, vortex injection,
 and Ornstein-Uhlenbeck forcing implementations.
 """
 
-import pytest
-import numpy as np
 import jax
 import jax.numpy as jnp
+import numpy as np
+import pytest
 
-from pygsquig.core.grid import make_grid, ifft2
+from pygsquig.core.grid import ifft2, make_grid
+from pygsquig.exceptions import ForcingError
 from pygsquig.forcing.stochastic_forcing import (
-    WhiteNoiseForcing,
     ColoredNoiseForcing,
-    StochasticVortexForcing,
     OrnsteinUhlenbeckForcing,
+    StochasticVortexForcing,
+    WhiteNoiseForcing,
     create_combined_stochastic_forcing,
 )
-from pygsquig.exceptions import ForcingError
 
 
 class TestWhiteNoiseForcing:

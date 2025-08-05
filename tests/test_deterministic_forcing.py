@@ -5,25 +5,25 @@ This module tests various deterministic forcing implementations
 including Taylor-Green, Kolmogorov flow, and other patterns.
 """
 
-import pytest
-import numpy as np
 import jax
 import jax.numpy as jnp
+import numpy as np
+import pytest
 
-from pygsquig.core.grid import make_grid, ifft2, fft2
+from pygsquig.core.grid import fft2, ifft2, make_grid
+from pygsquig.exceptions import ForcingError
 from pygsquig.forcing.deterministic_forcing import (
-    TaylorGreenForcing,
-    KolmogorovForcing,
     CheckerboardForcing,
-    ShearLayerForcing,
-    VortexPairForcing,
-    TimeModulatedForcing,
     CombinedDeterministicForcing,
-    make_taylor_green_forcing,
+    KolmogorovForcing,
+    ShearLayerForcing,
+    TaylorGreenForcing,
+    TimeModulatedForcing,
+    VortexPairForcing,
     make_kolmogorov_forcing,
     make_oscillating_forcing,
+    make_taylor_green_forcing,
 )
-from pygsquig.exceptions import ForcingError
 
 
 class TestTaylorGreenForcing:

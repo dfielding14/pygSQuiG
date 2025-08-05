@@ -1,26 +1,26 @@
 """Main script to run pygSQuiG simulations from YAML configuration files."""
 
-import click
+import signal
 import sys
 import time
+from datetime import datetime, timedelta
 from pathlib import Path
-import numpy as np
+
+import click
 import jax
 import jax.numpy as jnp
-from datetime import datetime, timedelta
-import signal
+import numpy as np
 
-from pygsquig.io import (
-    load_config,
-    save_checkpoint,
-    save_output,
-    save_diagnostics,
-)
 from pygsquig.core.grid import make_grid
 from pygsquig.core.solver import gSQGSolver
 from pygsquig.core.time_integrator import adaptive_timestep
-from pygsquig.utils import setup_logging, compute_total_energy, compute_enstrophy
-
+from pygsquig.io import (
+    load_config,
+    save_checkpoint,
+    save_diagnostics,
+    save_output,
+)
+from pygsquig.utils import compute_enstrophy, compute_total_energy, setup_logging
 
 # Global flag for graceful shutdown
 shutdown_requested = False

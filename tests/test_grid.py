@@ -2,12 +2,12 @@
 Tests for grid module.
 """
 
-import numpy as np
 import jax
 import jax.numpy as jnp
+import numpy as np
 import pytest
 
-from pygsquig.core.grid import Grid, make_grid, fft2, ifft2
+from pygsquig.core.grid import Grid, fft2, ifft2, make_grid
 
 
 class TestMakeGrid:

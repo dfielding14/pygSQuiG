@@ -5,7 +5,7 @@ This module provides explicit time integrators optimized for
 use with spectral methods in fluid dynamics simulations.
 """
 
-from typing import Callable, Any, Tuple
+from typing import Any, Callable, Tuple
 
 import jax
 import jax.numpy as jnp

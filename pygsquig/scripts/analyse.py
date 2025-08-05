@@ -3,17 +3,17 @@
 This script provides tools for post-processing and visualizing simulation results.
 """
 
-import click
-import numpy as np
-import matplotlib.pyplot as plt
 from pathlib import Path
-import xarray as xr
+from typing import List, Optional, Tuple
+
+import click
 import h5py
-from typing import Optional, List, Tuple
+import matplotlib.pyplot as plt
+import numpy as np
+import xarray as xr
 
 from pygsquig.io import load_diagnostics, load_output
 from pygsquig.utils import get_logger
-
 
 logger = get_logger("pygsquig.analyse")
 

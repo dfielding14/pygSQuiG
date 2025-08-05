@@ -1,17 +1,18 @@
 """Tests for the run.py CLI script."""
 
-import pytest
-import tempfile
 import shutil
-from pathlib import Path
-import yaml
+import tempfile
 import time
-import numpy as np
+from pathlib import Path
+
 import h5py
+import numpy as np
+import pytest
+import yaml
 from click.testing import CliRunner
 
-from pygsquig.scripts import run
 from pygsquig.io import load_config
+from pygsquig.scripts import run
 
 
 class TestRunScriptCLI:

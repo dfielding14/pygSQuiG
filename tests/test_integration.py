@@ -3,21 +3,29 @@
 These tests verify that all components work together correctly.
 """
 
-import pytest
-import numpy as np
-import jax
-import jax.numpy as jnp
-from pathlib import Path
 import tempfile
 import time
+from pathlib import Path
 
-from pygsquig.io import RunConfig, GridConfig, SolverConfig, SimulationConfig
-from pygsquig.core.grid import make_grid, ifft2
+import jax
+import jax.numpy as jnp
+import numpy as np
+import pytest
+
+from pygsquig.core.grid import ifft2, make_grid
 from pygsquig.core.solver import gSQGSolver
 from pygsquig.forcing import RingForcing
 from pygsquig.forcing.damping import CombinedDamping
-from pygsquig.utils import compute_total_energy, compute_enstrophy
-from pygsquig.io import save_checkpoint, load_checkpoint, save_diagnostics
+from pygsquig.io import (
+    GridConfig,
+    RunConfig,
+    SimulationConfig,
+    SolverConfig,
+    load_checkpoint,
+    save_checkpoint,
+    save_diagnostics,
+)
+from pygsquig.utils import compute_enstrophy, compute_total_energy
 
 
 class TestBasicSimulation:

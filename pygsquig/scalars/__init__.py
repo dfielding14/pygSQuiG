@@ -5,21 +5,21 @@ This module provides functionality for evolving passive scalars advected by
 gSQG velocity fields with user-defined source terms.
 """
 
-from .passive_scalar import PassiveScalarEvolver, MultiSpeciesEvolver
-from .state import PassiveScalarState, MultiScalarState
+from .diagnostics import (
+    compute_mixing_efficiency,
+    compute_scalar_dissipation,
+    compute_scalar_flux,
+    compute_scalar_variance_spectrum,
+)
+from .passive_scalar import MultiSpeciesEvolver, PassiveScalarEvolver
 from .source_terms import (
-    SourceTerm,
+    ChemicalReaction,
     ExponentialGrowth,
     LocalizedSource,
-    ChemicalReaction,
+    SourceTerm,
     TimePeriodicSource,
 )
-from .diagnostics import (
-    compute_scalar_variance_spectrum,
-    compute_scalar_flux,
-    compute_scalar_dissipation,
-    compute_mixing_efficiency,
-)
+from .state import MultiScalarState, PassiveScalarState
 
 __all__ = [
     # Core evolver

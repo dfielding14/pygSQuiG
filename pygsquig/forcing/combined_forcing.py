@@ -5,7 +5,8 @@ This module provides utilities for combining multiple forcing patterns
 with different weights and combination strategies.
 """
 
-from typing import List, Optional, Literal, Union
+from typing import List, Literal, Optional, Union
+
 import jax
 import jax.numpy as jnp
 from jax import Array

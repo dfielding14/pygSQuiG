@@ -1,9 +1,10 @@
 """Time series plotting functions for pygSQuiG simulations."""
 
-import numpy as np
-import matplotlib.pyplot as plt
 from pathlib import Path
-from typing import Optional, Tuple, Dict, List
+from typing import Dict, List, Optional, Tuple
+
+import matplotlib.pyplot as plt
+import numpy as np
 
 from .style import PlotStyle
 

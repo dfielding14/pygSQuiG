@@ -5,19 +5,19 @@ This module tests shear layers, jets, convective plumes,
 and topographic forcing implementations.
 """
 
-import pytest
-import numpy as np
 import jax
 import jax.numpy as jnp
+import numpy as np
+import pytest
 
-from pygsquig.core.grid import make_grid, ifft2
+from pygsquig.core.grid import ifft2, make_grid
+from pygsquig.exceptions import ForcingError
 from pygsquig.forcing.physical_forcing import (
-    ShearLayerForcing,
-    JetForcing,
     ConvectivePlumesForcing,
+    JetForcing,
+    ShearLayerForcing,
     TopographicForcing,
 )
-from pygsquig.exceptions import ForcingError
 
 
 class TestShearLayerForcing:

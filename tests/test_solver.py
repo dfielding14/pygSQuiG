@@ -2,13 +2,13 @@
 Tests for the gSQG solver.
 """
 
-import numpy as np
 import jax
 import jax.numpy as jnp
+import numpy as np
 import pytest
 
-from pygsquig.core.grid import make_grid, fft2, ifft2
-from pygsquig.core.solver import gSQGSolver, State
+from pygsquig.core.grid import fft2, ifft2, make_grid
+from pygsquig.core.solver import State, gSQGSolver
 
 
 class TestSolverInitialization:

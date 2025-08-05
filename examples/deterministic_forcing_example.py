@@ -6,14 +6,15 @@ This example demonstrates how to use various deterministic forcing
 patterns with the pygSQuiG solver.
 """
 
-import numpy as np
 import jax
 import jax.numpy as jnp
+import numpy as np
+
 from pygsquig.core.grid import make_grid
 from pygsquig.core.solver import gSQGSolver
 from pygsquig.forcing.deterministic_forcing import (
-    TaylorGreenForcing,
     KolmogorovForcing,
+    TaylorGreenForcing,
     make_oscillating_forcing,
 )
 

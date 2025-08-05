@@ -5,17 +5,18 @@ This module tests the scalar-specific configuration classes
 and their integration with the main configuration system.
 """
 
+import tempfile
+from pathlib import Path
+
 import pytest
 import yaml
-from pathlib import Path
-import tempfile
 
 from pygsquig.io.config import (
-    ScalarSourceConfig,
-    PassiveScalarConfig,
-    ScalarsConfig,
-    RunConfig,
     GridConfig,
+    PassiveScalarConfig,
+    RunConfig,
+    ScalarsConfig,
+    ScalarSourceConfig,
     SolverConfig,
 )
 

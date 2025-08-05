@@ -6,8 +6,9 @@ This example demonstrates basic usage of the pygSQuiG solver
 for simulating decaying Surface Quasi-Geostrophic turbulence.
 """
 
-import numpy as np
 import jax.numpy as jnp
+import numpy as np
+
 from pygsquig.core.grid import make_grid
 from pygsquig.core.solver import gSQGSolver
 from pygsquig.utils.diagnostics import compute_energy_spectrum, compute_total_energy

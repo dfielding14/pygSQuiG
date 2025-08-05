@@ -5,8 +5,8 @@ This module provides the PassiveScalarEvolver class for evolving
 passive scalars advected by velocity fields with diffusion and sources.
 """
 
-from typing import Optional, Callable, Tuple, Dict
 from dataclasses import dataclass, field
+from typing import Callable, Dict, Optional, Tuple
 
 import jax
 import jax.numpy as jnp
@@ -14,10 +14,10 @@ import jax.numpy as jnp
 from pygsquig.core.grid import Grid, fft2, ifft2
 from pygsquig.core.operators import jacobian
 from pygsquig.core.time_integrator import rk4_step
-from pygsquig.scalars.state import PassiveScalarState, MultiScalarState
-from pygsquig.scalars.source_terms import SourceTerm
-from pygsquig.validation import validate_diffusivity
 from pygsquig.exceptions import PassiveScalarError
+from pygsquig.scalars.source_terms import SourceTerm
+from pygsquig.scalars.state import MultiScalarState, PassiveScalarState
+from pygsquig.validation import validate_diffusivity
 
 
 @jax.jit

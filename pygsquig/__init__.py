@@ -6,8 +6,9 @@ __version__ = "0.1.0"
 __author__ = "pygSQuiG Developers"
 
 # Version check for JAX
-import jax
 import warnings
+
+import jax
 
 if not hasattr(jax, "__version__") or jax.__version__ < "0.4.0":
     warnings.warn(

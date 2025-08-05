@@ -10,7 +10,6 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
   build-cpu:
@@ -23,6 +22,10 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        
+      - name: Set lowercase image name
+        id: image
+        run: echo "name=$(echo '${{ github.repository }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
         
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -39,7 +42,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: ${{ env.REGISTRY }}/${{ steps.image.outputs.name }}
           tags: |
             type=ref,event=branch
             type=ref,event=pr
@@ -60,7 +63,7 @@ jobs:
           
       - name: Test CPU image
         run: |
-          docker run --rm ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:cpu-latest \
+          docker run --rm ${{ env.REGISTRY }}/${{ steps.image.outputs.name }}:cpu-latest \
             python -c "import pygsquig; print('pygSQuiG version:', pygsquig.__version__)"
             
   build-gpu:
@@ -73,6 +76,10 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        
+      - name: Set lowercase image name
+        id: image
+        run: echo "name=$(echo '${{ github.repository }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
         
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -89,7 +96,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: ${{ env.REGISTRY }}/${{ steps.image.outputs.name }}
           tags: |
             type=ref,event=branch,suffix=-gpu
             type=ref,event=pr,suffix=-gpu
@@ -118,12 +125,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         
+      - name: Set lowercase image name
+        id: image
+        run: echo "name=$(echo '${{ github.repository }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
+        
       - name: Run tests in Docker
         run: |
           docker run --rm \
             -v ${{ github.workspace }}:/workspace \
             -w /workspace \
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:pr-${{ github.event.number }} \
+            ${{ env.REGISTRY }}/${{ steps.image.outputs.name }}:pr-${{ github.event.number }} \
             python -m pytest tests/ -v --tb=short
             
       - name: Run example simulation
@@ -131,7 +142,7 @@ jobs:
           docker run --rm \
             -v ${{ github.workspace }}/configs:/configs:ro \
             -v /tmp/docker_output:/home/pygsquig/data \
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:pr-${{ github.event.number }} \
+            ${{ env.REGISTRY }}/${{ steps.image.outputs.name }}:pr-${{ github.event.number }} \
             python -m pygsquig.scripts.run /configs/docker_example.yml
             
       - name: Check output
@@ -149,5 +160,5 @@ jobs:
       - name: Create Docker Hub tags
         run: |
           echo "Release ${{ github.ref_name }} images are available at:"
-          echo "  CPU: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.ref_name }}"
-          echo "  GPU: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.ref_name }}-gpu"
+          echo "  CPU: ${{ env.REGISTRY }}/${{ steps.image.outputs.name }}:${{ github.ref_name }}"
+          echo "  GPU: ${{ env.REGISTRY }}/${{ steps.image.outputs.name }}:${{ github.ref_name }}-gpu"

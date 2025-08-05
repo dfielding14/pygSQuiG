@@ -5,7 +5,7 @@ This module provides functions to compute various diagnostics
 for passive scalar fields including spectra, fluxes, and mixing metrics.
 """
 
-from typing import Tuple, Optional
+from typing import Optional, Tuple
 
 import jax
 import jax.numpy as jnp

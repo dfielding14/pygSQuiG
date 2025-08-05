@@ -5,32 +5,32 @@ This module tests the passive scalar functionality including
 advection, diffusion, source terms, and diagnostics.
 """
 
-import pytest
-import numpy as np
 import jax
 import jax.numpy as jnp
+import numpy as np
+import pytest
 
-from pygsquig.core.grid import make_grid, fft2, ifft2
+from pygsquig.core.grid import fft2, ifft2, make_grid
 from pygsquig.core.solver_with_scalars import gSQGSolverWithScalars
+from pygsquig.scalars.diagnostics import (
+    compute_scalar_dissipation,
+    compute_scalar_flux,
+    compute_scalar_variance,
+    compute_scalar_variance_spectrum,
+)
 from pygsquig.scalars.passive_scalar import (
-    PassiveScalarEvolver,
     MultiSpeciesEvolver,
+    PassiveScalarEvolver,
     compute_scalar_advection,
     compute_scalar_diffusion,
 )
 from pygsquig.scalars.source_terms import (
+    ChemicalReaction,
     ExponentialGrowth,
     LocalizedSource,
-    ChemicalReaction,
     TimePeriodicSource,
 )
 from pygsquig.scalars.state import PassiveScalarState
-from pygsquig.scalars.diagnostics import (
-    compute_scalar_variance,
-    compute_scalar_variance_spectrum,
-    compute_scalar_flux,
-    compute_scalar_dissipation,
-)
 
 
 class TestPassiveScalarBasics:

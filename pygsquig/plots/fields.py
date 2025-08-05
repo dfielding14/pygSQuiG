@@ -1,9 +1,10 @@
 """Field visualization functions for pygSQuiG simulations."""
 
-import numpy as np
-import matplotlib.pyplot as plt
 from pathlib import Path
 from typing import Optional, Tuple
+
+import matplotlib.pyplot as plt
+import numpy as np
 
 from ..core.grid import Grid, ifft2
 from ..core.operators import compute_velocity_from_theta, fractional_laplacian
@@ -190,9 +191,9 @@ def plot_diagnostic_summary(
     # Import needed functions locally to avoid circular imports
     from ..utils.diagnostics import (
         compute_energy_spectrum,
-        compute_total_energy,
         compute_enstrophy,
         compute_palinstrophy,
+        compute_total_energy,
     )
 
     fig = plt.figure(figsize=PlotStyle.FIGSIZE_GRID)

@@ -5,7 +5,7 @@ This module provides the core solver class that orchestrates the simulation
 of gSQG turbulence using spectral methods.
 """
 
-from typing import Dict, Optional, Callable, Any
+from typing import Any, Callable, Dict, Optional
 
 import jax
 import jax.numpy as jnp
@@ -13,12 +13,11 @@ import jax.numpy as jnp
 from pygsquig.core.grid import Grid, fft2, ifft2
 from pygsquig.core.operators import (
     compute_velocity_from_theta,
+    hyperviscosity,
     jacobian,
     laplacian,
-    hyperviscosity,
 )
 from pygsquig.core.time_integrator import rk4_step
-
 
 # Type alias for state
 State = Dict[str, jax.Array]

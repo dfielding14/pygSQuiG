@@ -1,12 +1,12 @@
 """Test to verify hyperviscosity implementations are identical before refactoring."""
 
-import pytest
 import jax.numpy as jnp
 import numpy as np
+import pytest
 
 from pygsquig.core.grid import make_grid
-from pygsquig.core.solver import gSQGSolver
 from pygsquig.core.operators import hyperviscosity
+from pygsquig.core.solver import gSQGSolver
 
 
 class TestHyperviscosityImplementations:

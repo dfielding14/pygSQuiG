@@ -5,11 +5,12 @@ This module implements geophysically relevant forcing patterns including
 shear layers, jets, and other coherent structures.
 """
 
-from typing import Optional, Literal, Union
 from abc import ABC, abstractmethod
-import numpy as np
+from typing import Literal, Optional, Union
+
 import jax
 import jax.numpy as jnp
+import numpy as np
 from jax import Array
 
 from pygsquig.core.grid import Grid, fft2

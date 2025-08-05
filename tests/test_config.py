@@ -1,21 +1,22 @@
 """Tests for the configuration system."""
 
-import pytest
-import numpy as np
-from pathlib import Path
 import tempfile
+from pathlib import Path
+
+import numpy as np
+import pytest
 import yaml
 
 from pygsquig.io import (
-    RunConfig,
-    GridConfig,
-    SolverConfig,
-    ForcingConfig,
-    OutputConfig,
-    SimulationConfig,
-    InitialConditionConfig,
-    DissipationConfig,
     DampingConfig,
+    DissipationConfig,
+    ForcingConfig,
+    GridConfig,
+    InitialConditionConfig,
+    OutputConfig,
+    RunConfig,
+    SimulationConfig,
+    SolverConfig,
     TimeIntegrationConfig,
     load_config,
 )

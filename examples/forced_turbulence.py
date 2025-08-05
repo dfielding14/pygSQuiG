@@ -6,17 +6,18 @@ This example demonstrates how to set up a forced-dissipative
 turbulence simulation with ring forcing and combined damping.
 """
 
-import numpy as np
 import jax
 import jax.numpy as jnp
+import numpy as np
+
 from pygsquig.core.grid import make_grid
 from pygsquig.core.solver import gSQGSolver
-from pygsquig.forcing.ring_forcing import RingForcing
 from pygsquig.forcing.damping import CombinedDamping
+from pygsquig.forcing.ring_forcing import RingForcing
 from pygsquig.utils.diagnostics import (
     compute_energy_spectrum,
-    compute_total_energy,
     compute_enstrophy,
+    compute_total_energy,
 )
 
 # Parameters

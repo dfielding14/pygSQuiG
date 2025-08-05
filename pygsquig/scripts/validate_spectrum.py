@@ -4,12 +4,13 @@ This script runs a proper forced-dissipative SQG simulation to verify
 the k^(-5/3) spectrum develops in the inertial range.
 """
 
-import numpy as np
+import time
+from pathlib import Path
+
 import jax
 import jax.numpy as jnp
 import matplotlib.pyplot as plt
-from pathlib import Path
-import time
+import numpy as np
 
 from pygsquig.core.grid import make_grid
 from pygsquig.core.solver import gSQGSolver

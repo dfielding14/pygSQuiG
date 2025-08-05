@@ -8,19 +8,19 @@ This script shows how to:
 3. Analyze scalar mixing and transport
 """
 
-import numpy as np
-import matplotlib.pyplot as plt
 import jax.numpy as jnp
+import matplotlib.pyplot as plt
+import numpy as np
 
-from pygsquig.core.grid import make_grid, ifft2
+from pygsquig.core.grid import ifft2, make_grid
 from pygsquig.core.solver_with_scalars import gSQGSolverWithScalars
+from pygsquig.scalars.diagnostics import compute_scalar_flux, compute_scalar_variance_spectrum
 from pygsquig.scalars.source_terms import (
-    LocalizedSource,
     ExponentialGrowth,
-    make_heating_source,
+    LocalizedSource,
     make_cooling_source,
+    make_heating_source,
 )
-from pygsquig.scalars.diagnostics import compute_scalar_variance_spectrum, compute_scalar_flux
 
 
 def main():

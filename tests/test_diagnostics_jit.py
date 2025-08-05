@@ -4,20 +4,21 @@ Following test-first development, these tests ensure JIT compilation
 works correctly for all diagnostic functions.
 """
 
-import pytest
-import numpy as np
+import time
+
 import jax
 import jax.numpy as jnp
-import time
+import numpy as np
+import pytest
 
 from pygsquig.core.grid import make_grid
 from pygsquig.utils.diagnostics import (
+    compute_energy_flux,
     compute_energy_spectrum,
-    compute_total_energy,
     compute_enstrophy,
     compute_palinstrophy,
     compute_scalar_flux,
-    compute_energy_flux,
+    compute_total_energy,
 )
 
 

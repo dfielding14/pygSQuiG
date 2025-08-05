@@ -6,16 +6,16 @@ Taylor-Green, Kolmogorov flow, and other canonical configurations
 used in computational fluid dynamics research.
 """
 
-from typing import Optional, Literal, Union, Callable
 from abc import ABC, abstractmethod
+from typing import Callable, Literal, Optional, Union
 
 import jax
 import jax.numpy as jnp
 import numpy as np
 
 from pygsquig.core.grid import Grid, fft2, ifft2
-from pygsquig.validation import validate_diffusivity
 from pygsquig.exceptions import ForcingError
+from pygsquig.validation import validate_diffusivity
 
 
 class DeterministicForcing(ABC):
