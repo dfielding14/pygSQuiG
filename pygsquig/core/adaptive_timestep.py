@@ -162,15 +162,8 @@ def compute_timestep(
     # Diffusion CFL
     dt_diff = compute_diffusion_cfl(grid, nu_p, p)
     
-    # Combined constraint with weighting
-    # Use harmonic mean for combined constraint
-    if dt_diff < jnp.inf:
-        dt_combined = 1.0 / (
-            config.advection_weight / dt_adv + 
-            (1 - config.advection_weight) / dt_diff
-        )
-    else:
-        dt_combined = dt_adv
+    # Take the minimum of advection and diffusion constraints
+    dt_combined = jnp.minimum(dt_adv, dt_diff)
     
     # Apply safety factor
     dt_safe = config.cfl_safety * dt_combined

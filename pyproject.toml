@@ -126,6 +126,10 @@ addopts = [
     "--cov-report=term",
     "-v",
 ]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "benchmark: marks tests as benchmarks (deselect with '-m \"not benchmark\"')",
+]
 
 [tool.coverage.run]
 source = ["pygsquig"]
