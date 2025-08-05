@@ -24,7 +24,7 @@ class TestGridJIT:
             make_grid_jit = jax.jit(make_grid, static_argnums=(0, 1))
             grid = make_grid_jit(64, 2 * np.pi)
             assert grid.N == 64
-            assert grid.L == 2 * np.pi
+            assert 2 * np.pi == grid.L
         except:
             pytest.skip("make_grid not yet JIT-compatible")
 
@@ -136,7 +136,7 @@ class TestGridJIT:
 
             # Try to modify grid - should not affect original
             x_copy = grid.x.copy()
-            x_modified = x_copy.at[0, 0].set(999)
+            x_copy.at[0, 0].set(999)
 
             # Original should be unchanged
             assert grid.x[0, 0] != 999

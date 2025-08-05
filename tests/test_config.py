@@ -5,7 +5,6 @@ from pathlib import Path
 
 import numpy as np
 import pytest
-import yaml
 
 from pygsquig.io import (
     DampingConfig,
@@ -29,7 +28,7 @@ class TestGridConfig:
         """Test default grid configuration."""
         config = GridConfig()
         assert config.N == 256
-        assert config.L == 2 * np.pi
+        assert 2 * np.pi == config.L
 
     def test_custom_values(self):
         """Test custom grid configuration."""
@@ -290,10 +289,10 @@ class TestRunConfig:
 grid:
   N: 128
   L: 6.283185307179586
-  
+
 solver:
   alpha: 1.0
-  
+
 simulation:
   t_end: 10.0
 """

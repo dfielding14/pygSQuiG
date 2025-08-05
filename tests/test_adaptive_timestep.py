@@ -5,7 +5,6 @@ This module tests the adaptive timestep selection and
 stability monitoring functionality.
 """
 
-import jax
 import jax.numpy as jnp
 import numpy as np
 import pytest
@@ -21,7 +20,6 @@ from pygsquig.core.adaptive_timestep import (
     estimate_initial_timestep,
 )
 from pygsquig.core.grid import make_grid
-from pygsquig.core.operators import compute_velocity_from_theta
 from pygsquig.core.solver import gSQGSolver
 
 
@@ -280,7 +278,7 @@ class TestAdaptiveTimestepper:
         u = jnp.ones((self.N, self.N))
         v = jnp.zeros((self.N, self.N))
 
-        for i in range(5):
+        for _i in range(5):
             self.timestepper.compute_timestep(state, u, v)
             state["time"] += 0.1
 

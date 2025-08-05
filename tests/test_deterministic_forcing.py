@@ -20,7 +20,6 @@ from pygsquig.forcing.deterministic_forcing import (
     TaylorGreenForcing,
     TimeModulatedForcing,
     VortexPairForcing,
-    make_kolmogorov_forcing,
     make_oscillating_forcing,
     make_taylor_green_forcing,
 )
@@ -175,7 +174,7 @@ class TestCheckerboardForcing:
 
         # Check that adjacent cells can have opposite signs
         # Find a transition point
-        mid = self.N // 2
+        self.N // 2
         # The pattern should change sign across boundaries
 
     def test_rectangular_checkerboard(self):

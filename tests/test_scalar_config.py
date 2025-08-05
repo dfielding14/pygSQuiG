@@ -9,7 +9,6 @@ import tempfile
 from pathlib import Path
 
 import pytest
-import yaml
 
 from pygsquig.io.config import (
     GridConfig,
@@ -273,13 +272,13 @@ scalars:
       initial_params:
         center: [3.14159, 3.14159]
         width: 1.0
-        
+
     - name: salinity
       kappa: 0.005
       initial_condition: uniform
       initial_params:
         value: 35.0
-        
+
     - name: dye
       kappa: 0.001
       source:

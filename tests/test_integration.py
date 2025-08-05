@@ -4,7 +4,6 @@ These tests verify that all components work together correctly.
 """
 
 import tempfile
-import time
 from pathlib import Path
 
 import jax
@@ -85,7 +84,7 @@ class TestBasicSimulation:
 
         # Run with forcing
         dt = 0.001
-        for i in range(100):
+        for _i in range(100):
             rng_key, subkey = jax.random.split(rng_key)
             forcing_fn = lambda theta_hat: forcing(theta_hat, subkey, dt, grid)
             state = solver.step(state, dt, forcing=forcing_fn)
@@ -312,7 +311,7 @@ class TestDiagnostics:
 
             # Run and save diagnostics
             dt = 0.001
-            for i in range(10):
+            for _i in range(10):
                 state = solver.step(state, dt)
 
                 # Compute diagnostics
@@ -368,7 +367,7 @@ class TestScalingBehavior:
 
         # Run to statistical steady state
         dt = 0.001
-        for i in range(5000):
+        for _i in range(5000):
             rng_key, subkey = jax.random.split(rng_key)
             forcing_fn = lambda theta_hat: forcing(theta_hat, subkey, dt, grid)
             state = solver.step(state, dt, forcing=forcing_fn)

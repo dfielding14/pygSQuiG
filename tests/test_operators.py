@@ -9,7 +9,6 @@ import pytest
 
 from pygsquig.core.grid import fft2, ifft2, make_grid
 from pygsquig.core.operators import (
-    compute_streamfunction,
     compute_velocity_from_theta,
     fractional_laplacian,
     gradient,
@@ -367,7 +366,7 @@ class TestVelocityComputation:
         # For SQG, u = ∇^⊥(-Δ)^(-1/2)θ
         # For our test function, we can compute this analytically
         k_mag = 2 * np.sqrt(2)  # |k| for mode (2,2)
-        psi = theta / k_mag  # (-Δ)^(-1/2)θ
+        theta / k_mag  # (-Δ)^(-1/2)θ
 
         # Velocity from perpendicular gradient
         expected_u = -2 * jnp.sin(2 * grid.x) * jnp.cos(2 * grid.y) / k_mag

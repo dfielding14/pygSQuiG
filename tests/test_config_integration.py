@@ -3,8 +3,6 @@
 import tempfile
 from pathlib import Path
 
-import pytest
-
 from pygsquig.core.grid import make_grid
 from pygsquig.core.solver import gSQGSolver
 from pygsquig.forcing.ring_forcing import RingForcing
@@ -100,7 +98,7 @@ simulation:
             # Patterns from run.py
             grid = make_grid(adapted.grid.N, adapted.grid.L)
 
-            solver = gSQGSolver(
+            gSQGSolver(
                 grid,
                 alpha=adapted.solver.alpha,
                 nu_p=adapted.solver.dissipation.nu_p,

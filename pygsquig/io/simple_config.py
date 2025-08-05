@@ -108,7 +108,9 @@ class Config:
             self._deep_update(self._config, config_dict)
 
         # Auto-enable forcing if forcing parameters are provided
-        if "forcing" in (config_dict or {}) and "enabled" not in (config_dict or {}).get("forcing", {}):
+        if "forcing" in (config_dict or {}) and "enabled" not in (config_dict or {}).get(
+            "forcing", {}
+        ):
             # If forcing params provided but enabled not specified, auto-enable
             if (
                 self._config["forcing"].get("epsilon", 0) > 0
@@ -117,7 +119,9 @@ class Config:
                 self._config["forcing"]["enabled"] = True
 
         # Auto-enable damping if damping parameters are provided
-        if "damping" in (config_dict or {}) and "enabled" not in (config_dict or {}).get("damping", {}):
+        if "damping" in (config_dict or {}) and "enabled" not in (config_dict or {}).get(
+            "damping", {}
+        ):
             if self._config["damping"].get("mu", 0) > 0:
                 self._config["damping"]["enabled"] = True
 

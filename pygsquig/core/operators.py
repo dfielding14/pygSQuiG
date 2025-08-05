@@ -5,7 +5,6 @@ This module implements differential operators in spectral space for
 the generalized Surface Quasi-Geostrophic (gSQG) equations.
 """
 
-
 import jax
 import jax.numpy as jnp
 

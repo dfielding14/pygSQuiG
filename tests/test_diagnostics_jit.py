@@ -164,7 +164,7 @@ class TestDiagnosticsJIT:
         # Time regular version
         start = time.time()
         for _ in range(10):
-            energy = compute_total_energy(theta_hat, grid, alpha)
+            compute_total_energy(theta_hat, grid, alpha)
         time_regular = time.time() - start
 
         # Time JIT version
@@ -176,7 +176,7 @@ class TestDiagnosticsJIT:
 
             start = time.time()
             for _ in range(10):
-                energy = compute_energy_jit(theta_hat, grid, alpha)
+                compute_energy_jit(theta_hat, grid, alpha)
             time_jit = time.time() - start
 
             print(f"\nRegular: {time_regular*100:.2f}ms")

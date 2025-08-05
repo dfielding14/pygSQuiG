@@ -2,11 +2,8 @@
 
 import shutil
 import tempfile
-import time
 from pathlib import Path
 
-import h5py
-import numpy as np
 import pytest
 import yaml
 from click.testing import CliRunner
@@ -161,7 +158,7 @@ class TestRunScriptCLI:
         checkpoint = checkpoints[0]
 
         # Modify config for restart
-        with open(minimal_config, "r") as f:
+        with open(minimal_config) as f:
             config = yaml.safe_load(f)
         config["simulation"]["t_end"] = 0.2  # Extend simulation
 

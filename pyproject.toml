@@ -110,12 +110,15 @@ ignore = [
     "E501",  # line too long (handled by black)
     "E731",  # lambda assignment
     "N801",  # class name should use CapWords convention (allow gSQG*)
+    "N802",  # function name should be lowercase (allow test_N2_grid, test_odd_N_raises)
     "N803",  # argument name should be lowercase (allow N for grid size)
     "N806",  # variable in function should be lowercase (allow math conventions like N, L, E_k)
+    "N814",  # camelcase imported as constant (PlotStyle)
     "B023",  # function definition does not bind loop variable (common in scientific code)
     "SIM102", # use a single if statement (sometimes nested is clearer)
     "SIM108", # use ternary operator (sometimes if-else is clearer)
     "E402",  # module level import not at top (sometimes needed for circular imports)
+    "E722",  # bare except (used in tests to check JIT compatibility)
 ]
 
 [tool.mypy]

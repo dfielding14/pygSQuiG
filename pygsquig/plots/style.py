@@ -1,6 +1,5 @@
 """Plot styling configuration for pygSQuiG visualizations."""
 
-
 import matplotlib.pyplot as plt
 
 

@@ -5,7 +5,6 @@ This module tests the integration of passive scalars
 into the main simulation runner script.
 """
 
-import shutil
 import tempfile
 from pathlib import Path
 
@@ -15,7 +14,6 @@ import xarray as xr
 import yaml
 from click.testing import CliRunner
 
-from pygsquig.io.config import RunConfig
 from pygsquig.scripts.run import main
 
 

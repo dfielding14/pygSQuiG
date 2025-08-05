@@ -2,7 +2,6 @@
 Tests for damping module.
 """
 
-import jax
 import jax.numpy as jnp
 import numpy as np
 import pytest

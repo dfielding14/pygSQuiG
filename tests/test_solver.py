@@ -2,13 +2,12 @@
 Tests for the gSQG solver.
 """
 
-import jax
 import jax.numpy as jnp
 import numpy as np
 import pytest
 
 from pygsquig.core.grid import fft2, ifft2, make_grid
-from pygsquig.core.solver import State, gSQGSolver
+from pygsquig.core.solver import gSQGSolver
 
 
 class TestSolverInitialization:
@@ -235,7 +234,7 @@ class TestTimeEvolution:
         dt = 0.001
 
         # Take 10 steps
-        for i in range(10):
+        for _i in range(10):
             state = solver.step(state, dt)
 
         assert state["time"] == pytest.approx(10 * dt)

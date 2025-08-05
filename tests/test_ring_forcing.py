@@ -190,7 +190,7 @@ class TestEnergyInjection:
         rates = []
         key = jax.random.PRNGKey(42)
 
-        for i in range(10):
+        for _i in range(10):
             key, subkey = jax.random.split(key)
             force_hat = forcing(theta_hat, subkey, dt=0.01, grid=grid)
 
@@ -246,7 +246,7 @@ class TestTemporalCorrelation:
 
         # Subsequent calls should show correlation
         correlations = []
-        for i in range(20):
+        for _i in range(20):
             key, subkey = jax.random.split(key)
             force = forcing(theta_hat, subkey, dt=dt, grid=grid)
 

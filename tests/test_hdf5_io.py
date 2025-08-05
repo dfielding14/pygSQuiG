@@ -3,11 +3,8 @@
 import tempfile
 from pathlib import Path
 
-import h5py
 import jax.numpy as jnp
 import numpy as np
-import pytest
-import xarray as xr
 
 from pygsquig.core.grid import make_grid
 from pygsquig.io import (

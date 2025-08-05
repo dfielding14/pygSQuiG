@@ -13,7 +13,8 @@ import jax
 if not hasattr(jax, "__version__") or jax.__version__ < "0.4.0":
     warnings.warn(
         "pygSQuiG requires JAX >= 0.4.0. " "Please upgrade with: pip install --upgrade jax",
-        RuntimeWarning, stacklevel=2,
+        RuntimeWarning,
+        stacklevel=2,
     )
 
 # Enable double precision by default

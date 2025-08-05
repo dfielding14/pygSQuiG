@@ -174,7 +174,7 @@ class TestColoredNoiseForcing:
         n_samples = 100
         power_spectrum = jnp.zeros(self.N // 2)
 
-        for i in range(n_samples):
+        for _i in range(n_samples):
             key, subkey = jax.random.split(key)
             result = forcing(self.theta_hat, subkey, dt, self.grid)
 
@@ -275,7 +275,7 @@ class TestStochasticVortexForcing:
 
         # Try multiple times
         no_vortex_count = 0
-        for i in range(20):
+        for _i in range(20):
             key, subkey = jax.random.split(key)
             result = forcing(self.theta_hat, subkey, dt, self.grid)
             if jnp.allclose(result, 0):

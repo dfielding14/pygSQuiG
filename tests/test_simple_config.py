@@ -4,9 +4,8 @@ import tempfile
 from pathlib import Path
 
 import pytest
-import yaml
 
-from pygsquig.io.config_adapter import adapt_config, dataclass_to_config
+from pygsquig.io.config_adapter import adapt_config
 from pygsquig.io.simple_config import Config, load_config
 
 
@@ -64,7 +63,7 @@ class TestSimpleConfig:
     def test_validation(self):
         """Test configuration validation."""
         # Valid config should not raise
-        config = Config({"grid": {"N": 128}})
+        Config({"grid": {"N": 128}})
 
         # Invalid N (not even)
         with pytest.raises(ValueError, match="Invalid grid.N"):

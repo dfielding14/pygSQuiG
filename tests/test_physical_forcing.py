@@ -339,7 +339,7 @@ class TestTopographicForcing:
         forcing_phys = ifft2(result).real
 
         # Should be sinusoidal in y
-        y_profile = np.mean(forcing_phys, axis=1)
+        np.mean(forcing_phys, axis=1)
 
         # Should have sinusoidal structure
         assert np.max(forcing_phys) > 0.5
@@ -399,7 +399,7 @@ class TestForcingIntegration:
 
         # Initialize with small noise
         state = solver.initialize(seed=42)
-        initial_max = np.max(np.abs(state["theta_hat"]))
+        np.max(np.abs(state["theta_hat"]))
 
         # Evolve with forcing wrapper
         dt = 0.01  # Reasonable timestep
@@ -408,7 +408,7 @@ class TestForcingIntegration:
             return forcing(theta_hat, None, dt, grid)
 
         # Just check stability for a few steps
-        for step in range(10):
+        for _step in range(10):
             state = solver.step(state, dt, forcing=forcing_wrapper)
 
         # Check stability
@@ -434,12 +434,12 @@ class TestForcingIntegration:
         def forcing_wrapper(theta_hat, **kwargs):
             return forcing(theta_hat, None, dt, grid)
 
-        for step in range(500):
+        for _step in range(500):
             state = solver.step(state, dt, forcing=forcing_wrapper)
 
         # Check jet structure persists
         theta_phys = ifft2(state["theta_hat"]).real
-        y_profile = np.mean(theta_phys, axis=1)
+        np.mean(theta_phys, axis=1)
 
         # Should have clear structure
         assert np.std(theta_phys) > 0.01

@@ -7,7 +7,7 @@ import jax.numpy as jnp
 import numpy as np
 import pytest
 
-from pygsquig.core.grid import Grid, fft2, ifft2, make_grid
+from pygsquig.core.grid import fft2, ifft2, make_grid
 
 
 class TestMakeGrid:
@@ -92,11 +92,11 @@ class TestMakeGrid:
         # So modes with |k| >= 4 should be masked out
 
         # Check zero mode is not masked
-        assert grid.dealias_mask[0, 0] == True
+        assert grid.dealias_mask[0, 0]
 
         # Check that high wavenumbers are masked
         # k[N//2, 0] corresponds to kx = -N/2 = -6 (in units of 2π/L)
-        assert grid.dealias_mask[N // 2, 0] == False
+        assert not grid.dealias_mask[N // 2, 0]
 
         # Count kept modes - should be less than (2/3)² due to discrete grid
         kept_fraction = grid.dealias_mask.sum() / N**2
@@ -123,7 +123,7 @@ class TestFFTFunctions:
         """Test Parseval's theorem: ⟨|f|²⟩ = (1/N²) ⟨|f̂|²⟩."""
         N = 128
         L = 2 * np.pi
-        grid = make_grid(N=N, L=L)
+        make_grid(N=N, L=L)
 
         # Random field
         key = jax.random.PRNGKey(42)
@@ -204,9 +204,9 @@ class TestGridSmallSizes:
 
         # Check dealiasing mask keeps only DC and first mode
         # For N=4, dealias cutoff = (2/3)*2 ≈ 1.33
-        assert grid.dealias_mask[0, 0] == True  # k=0
-        assert grid.dealias_mask[0, 1] == True  # k=1
-        assert grid.dealias_mask[0, 2] == False  # k=-2
+        assert grid.dealias_mask[0, 0]  # k=0
+        assert grid.dealias_mask[0, 1]  # k=1
+        assert not grid.dealias_mask[0, 2]  # k=-2
 
 
 class TestGridConvergence:

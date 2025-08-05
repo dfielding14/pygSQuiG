@@ -21,8 +21,6 @@ from pygsquig.scalars.diagnostics import (
 from pygsquig.scalars.passive_scalar import (
     MultiSpeciesEvolver,
     PassiveScalarEvolver,
-    compute_scalar_advection,
-    compute_scalar_diffusion,
 )
 from pygsquig.scalars.source_terms import (
     ChemicalReaction,

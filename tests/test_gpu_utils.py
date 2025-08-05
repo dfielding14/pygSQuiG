@@ -38,7 +38,7 @@ class TestDeviceManagement:
         assert len(cpu_devices) > 0
 
         # GPU might not be available
-        gpu_devices = get_available_devices("gpu")
+        get_available_devices("gpu")
         # No assertion - just check it doesn't error
 
     def test_setup_device_auto(self):

@@ -8,8 +8,6 @@ import numpy as np
 import pytest
 
 from pygsquig.core.grid import make_grid
-from pygsquig.core.operators import fractional_laplacian
-from pygsquig.utils.diagnostics import compute_energy_spectrum
 
 
 class TestPlottingRefactor:
@@ -33,11 +31,7 @@ class TestPlottingRefactor:
         """Test direct imports from plots package."""
         from pygsquig.plots import (
             PlotStyle,
-            create_field_animation,
-            plot_diagnostic_summary,
-            plot_energy_spectrum_with_analysis,
             plot_field_slice,
-            plot_time_series_multiplot,
             plot_velocity_fields,
             plot_vorticity,
         )
@@ -52,13 +46,7 @@ class TestPlottingRefactor:
         """Test backward compatibility imports from utils."""
         from pygsquig.utils import (
             PlotStyle,
-            create_field_animation,
-            plot_diagnostic_summary,
-            plot_energy_spectrum_with_analysis,
             plot_field_slice,
-            plot_time_series_multiplot,
-            plot_velocity_fields,
-            plot_vorticity,
         )
 
         # Check all imports work
@@ -67,11 +55,8 @@ class TestPlottingRefactor:
 
     def test_submodule_imports(self):
         """Test imports from individual submodules."""
-        from pygsquig.plots.animations import create_field_animation
-        from pygsquig.plots.fields import plot_field_slice, plot_vorticity
-        from pygsquig.plots.spectra import plot_energy_spectrum_with_analysis
+        from pygsquig.plots.fields import plot_field_slice
         from pygsquig.plots.style import PlotStyle
-        from pygsquig.plots.timeseries import plot_time_series_multiplot
 
         # Verify imports
         assert PlotStyle.DPI == 150
