@@ -1,0 +1,98 @@
+# Example configuration for gSQG simulation with passive scalars
+
+# Grid configuration
+grid:
+  N: 256                        # Number of grid points (NxN)
+  L: 6.283185307179586         # Domain size (2π)
+
+# Solver configuration
+solver:
+  alpha: 1.0                    # Exponent in fractional Laplacian
+  dissipation:
+    type: hyperviscosity
+    nu_p: 1.0e-16
+    p: 8
+  damping:
+    type: linear_drag
+    mu: 0.1
+    k_cutoff_factor: 0.5
+  time_integration:
+    method: RK4
+    adaptive_cfl: true
+    cfl_safety: 0.8
+
+# Forcing configuration
+forcing:
+  type: ring
+  kf: 20.0                      # Forcing wavenumber
+  dk: 1.0                       # Width of forcing ring
+  epsilon: 0.1                  # Energy injection rate
+  tau_f: 0.0                    # White noise forcing
+  seed: 42
+
+# Passive scalars configuration
+scalars:
+  enabled: true
+  species:
+    # Temperature field with localized heating
+    - name: temperature
+      kappa: 0.01               # Thermal diffusivity
+      source:
+        type: localized
+        parameters:
+          x0: 3.14159           # Center x-coordinate
+          y0: 3.14159           # Center y-coordinate
+          sigma: 0.5            # Gaussian width
+          amplitude: 1.0        # Heating strength
+      initial_condition: gaussian
+      initial_params:
+        center: [3.14159, 3.14159]
+        width: 1.0
+    
+    # Passive dye with exponential decay
+    - name: dye
+      kappa: 0.001              # Lower diffusivity
+      source:
+        type: exponential
+        parameters:
+          rate: -0.1            # Decay rate
+      initial_condition: random
+      initial_params:
+        seed: 123
+        amplitude: 0.1
+    
+    # Chemical species with reaction
+    - name: chemical
+      kappa: 0.005
+      source:
+        type: chemical
+        parameters:
+          rate: 0.1             # Reaction rate
+          threshold: 0.01       # Reaction threshold
+      initial_condition: uniform
+      initial_params:
+        value: 1.0
+
+# Output configuration
+output:
+  fields: [theta, velocity, scalars]
+  diagnostics: 
+    - energy_spectrum
+    - scalar_flux
+    - enstrophy
+  save_every_n_steps: null
+  compress: true
+
+# Simulation control
+simulation:
+  t_end: 100.0
+  output_interval: 1.0
+  checkpoint_interval: 10.0
+  wall_time_limit: null
+  log_interval: 0.1
+
+# Initial conditions
+initial_condition:
+  type: random
+  amplitude: 1.0
+  seed: 42

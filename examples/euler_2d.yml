@@ -1,0 +1,34 @@
+# 2D Euler equations (α = 2)
+# Inviscid simulation with no forcing
+
+grid:
+  N: 256
+  L: 6.283185307179586  # 2π
+
+solver:
+  alpha: 2.0  # 2D Euler
+  dissipation:
+    type: hyperviscosity
+    nu_p: 1.0e-12  # Very small for nearly inviscid
+    p: 8
+  time_integration:
+    method: RK4
+    dt: 0.001
+    adaptive_cfl: true
+    cfl_safety: 0.5  # More conservative for inviscid
+
+simulation:
+  t_end: 50.0
+  output_interval: 0.5
+  checkpoint_interval: 5.0
+  log_interval: 0.1
+  
+output:
+  fields: ['theta', 'streamfunction']
+  diagnostics: ['energy_spectrum', 'enstrophy']
+  compress: true
+
+initial_condition:
+  type: random
+  amplitude: 1.0
+  seed: 12345

@@ -1,0 +1,49 @@
+# Generalized SQG with α = 0.5
+# High-resolution simulation with forcing
+
+grid:
+  N: 1024  # High resolution
+  L: 6.283185307179586  # 2π
+
+solver:
+  alpha: 0.5  # Intermediate between 2D turbulence and SQG
+  dissipation:
+    type: hyperviscosity
+    nu_p: 1.0e-20  # Very small for high resolution
+    p: 8
+  damping:
+    type: linear_drag
+    mu: 0.05
+    k_cutoff_factor: 0.5
+  time_integration:
+    method: RK4
+    dt: 0.0001  # Smaller timestep for stability
+    adaptive_cfl: true
+    cfl_safety: 0.7
+    dt_max: 0.001  # Cap maximum timestep
+
+forcing:
+  type: ring
+  kf: 40.0  # Higher forcing wavenumber for high res
+  dk: 2.0   # Wider ring
+  epsilon: 0.2  # Higher energy injection
+  tau_f: 0.1  # Correlated forcing (OU process)
+  seed: 99
+
+simulation:
+  t_end: 20.0  # Shorter run due to computational cost
+  output_interval: 0.2  # More frequent output
+  checkpoint_interval: 2.0
+  log_interval: 0.05
+  wall_time_limit: 86400  # 24 hours max
+  
+output:
+  fields: ['theta']  # Just theta to save space
+  diagnostics: ['energy_spectrum', 'scalar_flux', 'enstrophy', 'energy_flux']
+  save_every_n_steps: 100  # Alternative: save every N steps
+  compress: true
+
+initial_condition:
+  type: random
+  amplitude: 0.001  # Small initial perturbation
+  seed: 77

@@ -1,0 +1,51 @@
+# Configuration for SQG turbulence cascade study
+# This setup is designed to develop a proper k^(-5/3) spectrum
+
+grid:
+  N: 256
+  L: 6.283185307179586  # 2π
+
+solver:
+  alpha: 1.0  # SQG
+  dissipation:
+    nu_p: 1.0e-12  # Very weak hyperviscosity
+    p: 8           # High order to preserve inertial range
+
+forcing:
+  type: ring
+  kf: 30.0      # Force at intermediate scales
+  dk: 3.0       # Moderate forcing width
+  epsilon: 0.5  # Strong forcing for well-developed turbulence
+  tau_f: 0.0    # White-noise forcing
+
+time_integration:
+  method: rk4
+  adaptive: true
+  cfl_safety: 0.8
+  dt_max: 0.001
+
+simulation:
+  t_end: 50.0  # Long simulation for statistical steady state
+  checkpoint_interval: 5.0
+  
+output:
+  save_every: 0.5
+  save_dt: null
+  fields:
+    - theta
+    - theta_hat
+    - energy_spectrum
+  diagnostics:
+    - energy
+    - enstrophy
+    - palinstrophy
+    - dissipation_rate
+    - energy_flux
+    - scalar_flux
+    - theta_max
+    - cfl_number
+
+initial_condition:
+  type: random
+  amplitude: 0.01  # Small initial perturbation
+  seed: 42

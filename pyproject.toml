@@ -36,6 +36,7 @@ dependencies = [
     "pyyaml>=6.0",
     "tqdm>=4.65.0",
     "matplotlib>=3.6.0",
+    "pandas>=2.0.0",
 ]
 
 [project.optional-dependencies]
@@ -69,6 +70,8 @@ Issues = "https://github.com/yourusername/pygsquig/issues"
 [project.scripts]
 pygsquig-run = "pygsquig.scripts.run:main"
 pygsquig-analyse = "pygsquig.scripts.analyse:main"
+pygsquig-validate-spectrum = "pygsquig.scripts.validate_spectrum:main"
+pygsquig-full-analysis = "pygsquig.scripts.full_analysis:main"
 
 [tool.hatch.build.targets.sdist]
 exclude = [

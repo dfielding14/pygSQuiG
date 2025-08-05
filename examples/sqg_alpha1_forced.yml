@@ -1,0 +1,45 @@
+# Classic SQG turbulence with ring forcing
+# This configuration reproduces the setup from Valadão et al. 2025
+
+grid:
+  N: 512
+  L: 6.283185307179586  # 2π
+
+solver:
+  alpha: 1.0  # Standard SQG
+  dissipation:
+    type: hyperviscosity
+    nu_p: 1.0e-16
+    p: 8
+  damping:
+    type: linear_drag
+    mu: 0.1
+    k_cutoff_factor: 0.5  # Apply for k < kf/2
+  time_integration:
+    method: RK4
+    dt: 0.001
+    adaptive_cfl: true
+    cfl_safety: 0.8
+
+forcing:
+  type: ring
+  kf: 20.0  # Forcing wavenumber (20 * 2π/L)
+  dk: 1.0   # Ring width
+  epsilon: 0.1  # Energy injection rate
+  tau_f: 0.0  # White noise forcing
+
+simulation:
+  t_end: 100.0
+  output_interval: 1.0
+  checkpoint_interval: 10.0
+  log_interval: 0.1
+  
+output:
+  fields: ['theta']  # Can add 'streamfunction', 'velocity'
+  diagnostics: ['energy_spectrum', 'scalar_flux']
+  compress: true
+
+initial_condition:
+  type: random
+  amplitude: 0.01
+  seed: 42  # For reproducibility

@@ -1,0 +1,79 @@
+# Example configuration for Docker runs
+# This demonstrates a typical turbulence simulation setup
+
+simulation:
+  # Grid parameters
+  N: 256                    # Grid resolution (256x256)
+  L: 6.283185307179586     # Domain size (2π)
+  
+  # Physical parameters
+  alpha: 1.0               # Fractional Laplacian exponent (SQG)
+  nu_p: 1e-6               # Hyperviscosity coefficient
+  p: 8                     # Hyperviscosity order
+  
+  # Initial condition
+  initial_condition:
+    type: "random"         # Random initial field
+    energy: 0.5           # Initial energy level
+    seed: 42              # Random seed for reproducibility
+
+# Forcing configuration
+forcing:
+  type: "ring"            # Ring forcing in Fourier space
+  kf: 30.0               # Forcing wavenumber
+  dk: 2.0                # Forcing bandwidth
+  epsilon: 0.1           # Energy injection rate
+
+# Time integration
+time:
+  integrator: "RK4"      # 4th-order Runge-Kutta
+  t_final: 50.0         # Final time
+  dt: 0.001             # Time step
+  
+  # Adaptive timestepping (optional)
+  adaptive:
+    enabled: false
+    cfl_safety: 0.8
+    dt_min: 1e-6
+    dt_max: 0.01
+
+# Output configuration
+output:
+  # Save settings
+  save_interval: 1.0     # Save every 1.0 time units
+  save_fields: true      # Save full fields
+  save_spectra: true     # Save energy spectra
+  
+  # File settings
+  filename: "docker_run"
+  format: "hdf5"
+  compression: "gzip"
+  compression_level: 4
+  
+  # Diagnostics
+  diagnostics:
+    - "energy"           # Total energy
+    - "enstrophy"       # Total enstrophy
+    - "dissipation"     # Dissipation rate
+    - "flux"            # Energy flux
+
+# Visualization (optional)
+visualization:
+  enabled: false         # Disable for batch runs
+  plot_interval: 10      # Plot every 10 saves
+  fields_to_plot:
+    - "theta"           # Temperature/buoyancy
+    - "vorticity"       # Vorticity field
+  
+# Performance options
+performance:
+  # Memory optimization
+  use_float32: false     # Use float64 for accuracy
+  
+  # Parallelization
+  device: "auto"         # Auto-detect CPU/GPU
+  
+# Logging
+logging:
+  level: "INFO"          # Logging level
+  file: "simulation.log" # Log file name

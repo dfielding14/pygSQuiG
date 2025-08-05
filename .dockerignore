@@ -1,0 +1,75 @@
+# Git files
+.git/
+.gitignore
+.github/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+.coverage
+.pytest_cache/
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Data and output files
+data/
+outputs/
+results/
+*.h5
+*.hdf5
+*.nc
+*.npz
+*.npy
+
+# Documentation build
+docs/_build/
+docs/.doctrees/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Distribution
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Docker files (don't copy docker-compose into image)
+docker-compose*.yml
+Dockerfile*
+
+# Temporary files
+*.tmp
+*.log
+tmp/
+
+# MacOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Large files
+*.mp4
+*.avi
+*.mov
+*.gif

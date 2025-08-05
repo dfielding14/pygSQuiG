@@ -1,0 +1,77 @@
+version: '3.8'
+
+services:
+  pygsquig:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runtime
+    image: pygsquig:latest
+    container_name: pygsquig_dev
+    ports:
+      - "8888:8888"  # Jupyter Lab
+    volumes:
+      # Mount code for development
+      - ./pygsquig:/home/pygsquig/app/pygsquig:ro
+      - ./examples:/home/pygsquig/app/examples:ro
+      - ./tests:/home/pygsquig/app/tests:ro
+      
+      # Mount data directory for outputs
+      - ./data:/home/pygsquig/data
+      - ./notebooks:/home/pygsquig/notebooks
+      
+      # Mount config files
+      - ./configs:/home/pygsquig/configs:ro
+    environment:
+      # JAX configuration
+      - JAX_PLATFORM_NAME=cpu
+      - JAX_ENABLE_X64=true
+      
+      # Jupyter configuration
+      - JUPYTER_ENABLE_LAB=yes
+      
+      # pygSQuiG configuration
+      - PYGSQUIG_LOG_LEVEL=INFO
+      
+    # Uncomment for GPU support
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: 1
+    #           capabilities: [gpu]
+    
+  # Service for running simulations
+  pygsquig-run:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runtime
+    image: pygsquig:latest
+    container_name: pygsquig_run
+    volumes:
+      - ./data:/home/pygsquig/data
+      - ./configs:/home/pygsquig/configs:ro
+    environment:
+      - JAX_PLATFORM_NAME=cpu
+      - JAX_ENABLE_X64=true
+    entrypoint: ["python", "-m", "pygsquig.scripts.run"]
+    command: ["--help"]  # Override with actual config file
+    
+  # Service for running tests
+  pygsquig-test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: builder  # Use builder stage for testing
+    image: pygsquig:test
+    container_name: pygsquig_test
+    volumes:
+      - ./:/app:ro
+    environment:
+      - JAX_PLATFORM_NAME=cpu
+      - JAX_ENABLE_X64=true
+    working_dir: /app
+    entrypoint: ["python", "-m", "pytest"]
+    command: ["tests/", "-v"]

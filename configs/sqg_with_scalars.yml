@@ -1,0 +1,87 @@
+# Configuration for SQG simulation with passive scalars
+# Demonstrates mixing and transport in turbulence
+
+grid:
+  N: 256
+  L: 6.283185307179586  # 2π
+
+solver:
+  alpha: 1.0  # SQG
+  dissipation:
+    type: hyperviscous
+    nu_p: 1.0e-6
+    p: 8
+
+forcing:
+  type: ring
+  kf: 30.0
+  dk: 2.0
+  epsilon: 0.1
+
+# Passive scalar configuration
+# Note: This requires using solver_with_scalars.py
+passive_scalars:
+  # Passive tracer with no diffusion
+  tracer:
+    kappa: 0.0
+    initial:
+      type: step
+      x_split: 3.14159  # π
+  
+  # Temperature with diffusion and heating
+  temperature:
+    kappa: 0.01
+    initial:
+      type: gaussian
+      x0: 4.71239  # 3π/2
+      y0: 3.14159  # π
+      sigma: 0.5
+    source:
+      type: localized
+      amplitude: 1.0
+      x0: 1.5708   # π/2
+      y0: 3.14159  # π
+      sigma: 0.4
+  
+  # Chemical with decay
+  chemical:
+    kappa: 0.005
+    initial:
+      type: uniform
+      value: 1.0
+    source:
+      type: exponential
+      rate: -0.1  # Decay
+
+initial_condition:
+  type: random
+  seed: 42
+  k_peak: 10
+  k_cutoff: 20
+
+simulation:
+  t_end: 10.0
+  dt: null  # Automatic
+  method: rk4
+
+output:
+  path: output_sqg_scalars
+  save_every: 0.5
+  fields:
+    - theta      # Active scalar
+    - velocity   # For analysis
+    - tracer     # Passive scalars
+    - temperature
+    - chemical
+  diagnostics_every: 0.1
+  checkpoint_every: 5.0
+
+logging:
+  level: INFO
+  
+# Additional scalar diagnostics to compute
+scalar_diagnostics:
+  - variance_spectrum
+  - turbulent_flux
+  - mixing_efficiency
+  - pdf_moments

@@ -1,0 +1,16 @@
+# Minimal test configuration for quick runs
+
+grid:
+  N: 64  # Small grid for fast testing
+  L: 6.283185307179586
+
+solver:
+  alpha: 1.0
+  dissipation:
+    nu_p: 1.0e-6
+    p: 4
+
+simulation:
+  t_end: 1.0
+  output_interval: 0.1
+  checkpoint_interval: 0.5
