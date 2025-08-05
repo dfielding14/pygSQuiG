@@ -52,7 +52,7 @@ class CFLConfig:
 
 
 @jax.jit
-def compute_max_velocity(u: Array, v: Array) -> float:
+def compute_max_velocity(u: Array, v: Array) -> Array:
     """Compute maximum velocity magnitude.
 
     Args:
@@ -63,11 +63,11 @@ def compute_max_velocity(u: Array, v: Array) -> float:
         Maximum velocity magnitude
     """
     vel_mag = jnp.sqrt(u**2 + v**2)
-    return float(jnp.max(vel_mag))
+    return jnp.max(vel_mag)
 
 
 @jax.jit
-def compute_advection_cfl(u: Array, v: Array, dx: float) -> float:
+def compute_advection_cfl(u: Array, v: Array, dx: float) -> Array:
     """Compute CFL number for advection.
 
     CFL_adv = max(|u|) * dt / dx
@@ -83,7 +83,7 @@ def compute_advection_cfl(u: Array, v: Array, dx: float) -> float:
     max_vel = compute_max_velocity(u, v)
     # Avoid division by zero
     max_vel = jnp.maximum(max_vel, 1e-10)
-    return float(dx / max_vel)
+    return dx / max_vel
 
 
 def compute_diffusion_cfl(grid: Grid, nu: float, p: int = 2) -> float:
@@ -151,7 +151,7 @@ def compute_timestep(
     dx = grid.L / grid.N
 
     # Advection CFL
-    dt_adv = compute_advection_cfl(u, v, dx)
+    dt_adv = float(compute_advection_cfl(u, v, dx))  # type: ignore[arg-type]
 
     # Diffusion CFL
     dt_diff = compute_diffusion_cfl(grid, nu_p, p)
@@ -186,7 +186,7 @@ def compute_timestep(
         "dt_diff": float(dt_diff),
         "cfl_adv": float(cfl_adv),
         "cfl_diff": float(cfl_diff),
-        "max_velocity": float(compute_max_velocity(u, v)),
+        "max_velocity": float(compute_max_velocity(u, v)),  # type: ignore[arg-type]
         "limited_by": "advection" if dt_adv < dt_diff else "diffusion",
     }
 
