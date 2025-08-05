@@ -33,7 +33,7 @@ from .hdf5_io import (
 __all__ = [
     # Original configuration system
     "RunConfig",
-    "GridConfig", 
+    "GridConfig",
     "SolverConfig",
     "ForcingConfig",
     "OutputConfig",

@@ -12,34 +12,31 @@ from .source_terms import (
     ExponentialGrowth,
     LocalizedSource,
     ChemicalReaction,
-    TimePeriodicSource
+    TimePeriodicSource,
 )
 from .diagnostics import (
     compute_scalar_variance_spectrum,
     compute_scalar_flux,
     compute_scalar_dissipation,
-    compute_mixing_efficiency
+    compute_mixing_efficiency,
 )
 
 __all__ = [
     # Core evolver
-    'PassiveScalarEvolver',
-    'MultiSpeciesEvolver',
-    
+    "PassiveScalarEvolver",
+    "MultiSpeciesEvolver",
     # State management
-    'PassiveScalarState',
-    'MultiScalarState',
-    
+    "PassiveScalarState",
+    "MultiScalarState",
     # Source terms
-    'SourceTerm',
-    'ExponentialGrowth',
-    'LocalizedSource',
-    'ChemicalReaction',
-    'TimePeriodicSource',
-    
+    "SourceTerm",
+    "ExponentialGrowth",
+    "LocalizedSource",
+    "ChemicalReaction",
+    "TimePeriodicSource",
     # Diagnostics
-    'compute_scalar_variance_spectrum',
-    'compute_scalar_flux',
-    'compute_scalar_dissipation',
-    'compute_mixing_efficiency'
+    "compute_scalar_variance_spectrum",
+    "compute_scalar_flux",
+    "compute_scalar_dissipation",
+    "compute_mixing_efficiency",
 ]

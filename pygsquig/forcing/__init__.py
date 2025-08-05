@@ -15,21 +15,21 @@ from .deterministic_forcing import (
     CombinedDeterministicForcing,
     make_taylor_green_forcing,
     make_kolmogorov_forcing,
-    make_oscillating_forcing
+    make_oscillating_forcing,
 )
 
 __all__ = [
-    'RingForcing',
-    'CombinedDamping',
-    'DeterministicForcing',
-    'TaylorGreenForcing',
-    'KolmogorovForcing', 
-    'CheckerboardForcing',
-    'ShearLayerForcing',
-    'VortexPairForcing',
-    'TimeModulatedForcing',
-    'CombinedDeterministicForcing',
-    'make_taylor_green_forcing',
-    'make_kolmogorov_forcing',
-    'make_oscillating_forcing'
+    "RingForcing",
+    "CombinedDamping",
+    "DeterministicForcing",
+    "TaylorGreenForcing",
+    "KolmogorovForcing",
+    "CheckerboardForcing",
+    "ShearLayerForcing",
+    "VortexPairForcing",
+    "TimeModulatedForcing",
+    "CombinedDeterministicForcing",
+    "make_taylor_green_forcing",
+    "make_kolmogorov_forcing",
+    "make_oscillating_forcing",
 ]

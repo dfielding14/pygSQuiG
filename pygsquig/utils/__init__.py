@@ -35,7 +35,7 @@ from ..plots import (
 __all__ = [
     # Diagnostics
     "compute_energy_spectrum",
-    "compute_scalar_flux", 
+    "compute_scalar_flux",
     "compute_enstrophy",
     "compute_energy_flux",
     "compute_total_energy",
