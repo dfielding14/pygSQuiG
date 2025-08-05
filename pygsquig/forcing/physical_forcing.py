@@ -161,9 +161,9 @@ class ShearLayerForcing(PhysicalForcing):
         self._time += dt
 
         if self.time_dependence == "steady":
-            return self.amplitude
+            return float(self.amplitude)
         elif self.time_dependence == "oscillatory":
-            return self.amplitude * jnp.cos(self.omega * self._time + self.phase)
+            return float(self.amplitude * jnp.cos(self.omega * self._time + self.phase))
         elif self.time_dependence == "pulsed":
             # Pulse every 2π/omega
             phase = (self.omega * self._time + self.phase) % (2 * np.pi)
@@ -327,13 +327,13 @@ class JetForcing(PhysicalForcing):
         self._time += dt
 
         if self.time_dependence == "steady":
-            return self.amplitude
+            return float(self.amplitude)
         elif self.time_dependence == "oscillatory":
-            return self.amplitude * jnp.cos(self.omega * self._time)
+            return float(self.amplitude * jnp.cos(self.omega * self._time))
         elif self.time_dependence == "growing":
-            return self.amplitude * jnp.exp(self.growth_rate * self._time)
+            return float(self.amplitude * jnp.exp(self.growth_rate * self._time))
         else:
-            return self.amplitude
+            return float(self.amplitude)
 
 
 class ConvectivePlumesForcing(PhysicalForcing):
@@ -369,7 +369,7 @@ class ConvectivePlumesForcing(PhysicalForcing):
         self.randomize_positions = randomize_positions
 
         # Initialize plume positions and ages
-        self.plume_data = None
+        self.plume_data: list[list[float]] = []
 
     def __call__(
         self, theta_hat: Array, key: Optional[jax.random.PRNGKey], dt: float, grid: Grid
@@ -422,7 +422,7 @@ class ConvectivePlumesForcing(PhysicalForcing):
 
     def _initialize_plumes(self, L: float, key: Optional[jax.random.PRNGKey]):
         """Initialize plume positions."""
-        self.plume_data = []
+        self.plume_data: list[list[float]] = []
 
         if self.randomize_positions and key is not None:
             # Random positions

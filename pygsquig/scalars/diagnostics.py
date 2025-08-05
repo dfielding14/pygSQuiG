@@ -279,7 +279,7 @@ def compute_batchelor_scale(
         Batchelor scale
     """
     if kappa == 0 or epsilon == 0:
-        return np.inf
+        return float(np.inf)
 
     l_B = (kappa**3 / epsilon) ** (1 / 4)
     return float(l_B)
@@ -300,7 +300,7 @@ def compute_peclet_number(u_rms: float, L_integral: float, kappa: float) -> floa
         Péclet number
     """
     if kappa == 0:
-        return np.inf
+        return float(np.inf)
 
     Pe = u_rms * L_integral / kappa
     return float(Pe)

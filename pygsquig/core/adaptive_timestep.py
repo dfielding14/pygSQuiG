@@ -63,7 +63,7 @@ def compute_max_velocity(u: Array, v: Array) -> float:
         Maximum velocity magnitude
     """
     vel_mag = jnp.sqrt(u**2 + v**2)
-    return jnp.max(vel_mag)
+    return float(jnp.max(vel_mag))
 
 
 @jax.jit
@@ -83,7 +83,7 @@ def compute_advection_cfl(u: Array, v: Array, dx: float) -> float:
     max_vel = compute_max_velocity(u, v)
     # Avoid division by zero
     max_vel = jnp.maximum(max_vel, 1e-10)
-    return dx / max_vel
+    return float(dx / max_vel)
 
 
 def compute_diffusion_cfl(grid: Grid, nu: float, p: int = 2) -> float:
@@ -101,7 +101,7 @@ def compute_diffusion_cfl(grid: Grid, nu: float, p: int = 2) -> float:
         Maximum timestep for diffusion CFL = 1
     """
     if nu == 0:
-        return jnp.inf
+        return float(jnp.inf)
 
     dx = grid.L / grid.N
 
@@ -122,7 +122,7 @@ def compute_diffusion_cfl(grid: Grid, nu: float, p: int = 2) -> float:
         # The most restrictive mode is at k_max
         dt_diff = dx ** (2 * p) / (nu * k_max ** (2 * p - 2))
 
-    return dt_diff
+    return float(dt_diff)
 
 
 def compute_timestep(
@@ -213,9 +213,9 @@ class AdaptiveTimestepper:
         self.verbose = verbose
 
         # History tracking
-        self.dt_history = []
-        self.cfl_history = []
-        self.time_history = []
+        self.dt_history: list[float] = []
+        self.cfl_history: list[float] = []
+        self.time_history: list[float] = []
 
         # Statistics
         self.n_steps = 0

@@ -143,11 +143,13 @@ class CombinedForcing:
                 contribution = forcing(theta_hat, dt, grid)
 
             # Multiplicative combination in physical space
-            combined_phys = grid.ifft2(combined_forcing)
-            contrib_phys = grid.ifft2(contribution)
+            from pygsquig.core.grid import fft2, ifft2
+
+            combined_phys = ifft2(combined_forcing)
+            contrib_phys = ifft2(contribution)
 
             combined_phys = combined_phys * contrib_phys * self.weights[i]
-            combined_forcing = grid.fft2(combined_phys)
+            combined_forcing = fft2(combined_phys)
 
         return combined_forcing
 
@@ -263,10 +265,12 @@ class MaskForcing:
             base_forcing = self.base_forcing(theta_hat, dt, grid)
 
         # Apply mask in physical space
-        forcing_phys = grid.ifft2(base_forcing)
+        from pygsquig.core.grid import fft2, ifft2
+
+        forcing_phys = ifft2(base_forcing)
         forcing_phys = forcing_phys * self._mask
 
-        return grid.fft2(forcing_phys)
+        return fft2(forcing_phys)
 
     def _compute_mask(self, grid: Grid):
         """Compute spatial mask."""

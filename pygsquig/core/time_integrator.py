@@ -97,7 +97,7 @@ def compute_cfl(
 
     dt_cfl = safety_factor * jnp.minimum(dt_x, dt_y)
 
-    return dt_cfl
+    return float(dt_cfl)
 
 
 def compute_diffusion_timestep(nu: float, k2_max: float, safety_factor: float = 0.8) -> float:
@@ -116,10 +116,10 @@ def compute_diffusion_timestep(nu: float, k2_max: float, safety_factor: float = 
         Maximum stable time step for diffusion
     """
     if nu <= 0 or k2_max <= 0:
-        return jnp.inf
+        return float(jnp.inf)
 
     dt_diff = 2.0 / (nu * k2_max)
-    return safety_factor * dt_diff
+    return float(safety_factor * dt_diff)
 
 
 def adaptive_timestep(
@@ -157,4 +157,4 @@ def adaptive_timestep(
     if dt_max is not None:
         dt = jnp.minimum(dt, dt_max)
 
-    return dt
+    return float(dt)

@@ -510,6 +510,7 @@ def make_oscillating_forcing(
         Time-modulated forcing instance
     """
     # Create base pattern
+    base: DeterministicForcing
     if base_pattern == "taylor_green":
         base = TaylorGreenForcing(**kwargs)
     elif base_pattern == "kolmogorov":
