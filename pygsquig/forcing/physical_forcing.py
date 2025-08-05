@@ -380,7 +380,7 @@ class ConvectivePlumesForcing(PhysicalForcing):
         radius = self.plume_radius * L
 
         # Initialize plumes if needed
-        if self.plume_data is None:
+        if not self.plume_data:
             self._initialize_plumes(L, key)
 
         # Update plume positions

@@ -437,10 +437,10 @@ class TestSolverIntegration:
         new_state = solver.step(state, dt)
 
         # Check all fields updated
-        assert new_state.time == dt
-        assert not jnp.allclose(new_state.theta_hat, state.theta_hat)
-        assert "tracer" in new_state.scalar_state.scalars
-        assert "temperature" in new_state.scalar_state.scalars
+        assert new_state["time"] == dt
+        assert not jnp.allclose(new_state["theta_hat"], state["theta_hat"])
+        assert "tracer" in new_state["scalar_state"].scalars
+        assert "temperature" in new_state["scalar_state"].scalars
 
     def test_diagnostics_with_scalars(self):
         """Test diagnostic output includes scalars."""

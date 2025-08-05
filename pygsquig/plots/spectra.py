@@ -19,7 +19,7 @@ def plot_energy_spectrum_with_analysis(
     inertial_range: Optional[tuple[float, float]] = None,
     output_path: Optional[Path] = None,
     figsize: Optional[tuple[float, float]] = None,
-) -> tuple[Optional[plt.Figure], float]:
+) -> tuple[Optional[plt.Figure], Optional[float]]:
     """Plot energy spectrum with reference slopes and inertial range analysis.
 
     Args:
@@ -63,7 +63,7 @@ def plot_energy_spectrum_with_analysis(
                 ax.loglog(k_ref, E_ref, "--", linewidth=1.5, label=label, alpha=0.7)
 
     # Fit and show inertial range if specified
-    measured_slope: float = 0.0
+    measured_slope: Optional[float] = None
     if inertial_range:
         k_min, k_max = inertial_range
         mask = (k >= k_min) & (k <= k_max)

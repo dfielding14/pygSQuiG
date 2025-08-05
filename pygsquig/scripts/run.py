@@ -423,10 +423,24 @@ def main(config, device, checkpoint, output_dir, dry_run, log_level):
                     u, v = compute_velocity_from_theta(theta_hat, grid, run_config.solver.alpha)
                     data["u"] = u
                     data["v"] = v
-                elif field == "scalars" and hasattr(state, "scalar_state") and state.scalar_state:
-                    # Add all scalar fields
-                    for name, scalar_hat in state.scalar_state.scalars.items():
-                        data[f"scalar_{name}"] = ifft2(scalar_hat)
+                elif field == "scalars":
+                    # Check if state has scalar fields (handle both dict and object access)
+                    scalar_state = None
+                    if hasattr(state, "scalar_state"):
+                        scalar_state = state.scalar_state
+                    elif isinstance(state, dict) and "scalar_state" in state:
+                        scalar_state = state["scalar_state"]
+
+                    if scalar_state:
+                        # Add all scalar fields
+                        # Handle both NamedTuple and dict scalar_state
+                        scalars = (
+                            scalar_state.scalars
+                            if hasattr(scalar_state, "scalars")
+                            else scalar_state.get("scalars", {})
+                        )
+                        for name, scalar_hat in scalars.items():
+                            data[f"scalar_{name}"] = ifft2(scalar_hat)
 
             # Save output
             step = state.step if hasattr(state, "step") else state["step"]
@@ -478,9 +492,21 @@ def main(config, device, checkpoint, output_dir, dry_run, log_level):
         theta_hat = get_theta_hat(state)
         data = {"theta": ifft2(theta_hat)}
 
-        # Add scalars if present
-        if hasattr(state, "scalar_state") and state.scalar_state:
-            for name, scalar_hat in state.scalar_state.scalars.items():
+        # Add scalars if present (handle both dict and object access)
+        scalar_state = None
+        if hasattr(state, "scalar_state"):
+            scalar_state = state.scalar_state
+        elif isinstance(state, dict) and "scalar_state" in state:
+            scalar_state = state["scalar_state"]
+
+        if scalar_state:
+            # Handle both NamedTuple and dict scalar_state
+            scalars = (
+                scalar_state.scalars
+                if hasattr(scalar_state, "scalars")
+                else scalar_state.get("scalars", {})
+            )
+            for name, scalar_hat in scalars.items():
                 data[f"scalar_{name}"] = ifft2(scalar_hat)
 
         output_file = dirs["fields"] / f"fields_final_{final_step:08d}.nc"

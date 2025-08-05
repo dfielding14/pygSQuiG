@@ -43,15 +43,13 @@ class TestPlottingRefactor:
         assert hasattr(PlotStyle, "setup")
 
     def test_imports_from_utils_backward_compatibility(self):
-        """Test backward compatibility imports from utils."""
-        from pygsquig.utils import (
-            PlotStyle,
-            plot_field_slice,
-        )
-
-        # Check all imports work
-        assert callable(plot_field_slice)
-        assert hasattr(PlotStyle, "FIELD_CMAP")
+        """Test that plotting imports have been moved to plots package."""
+        # These should now raise ImportError since we removed backward compatibility
+        with pytest.raises(ImportError):
+            from pygsquig.utils import PlotStyle
+        
+        with pytest.raises(ImportError):
+            from pygsquig.utils import plot_field_slice
 
     def test_submodule_imports(self):
         """Test imports from individual submodules."""
@@ -145,11 +143,9 @@ class TestPlottingRefactor:
         """Test PlotStyle is consistent across modules."""
         from pygsquig.plots import PlotStyle as PS1
         from pygsquig.plots.style import PlotStyle as PS2
-        from pygsquig.utils import PlotStyle as PS3
 
-        # All should be the same class
+        # Should be the same class
         assert PS1 is PS2
-        assert PS1 is PS3
         assert PS1.FIELD_CMAP == "RdBu_r"
 
     def test_new_functions_available(self):

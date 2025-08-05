@@ -83,6 +83,7 @@ class AdaptivegSQGSolver:
         state: State,
         forcing: Optional[Callable] = None,
         damping: Optional[Callable] = None,
+        dt_max: Optional[float] = None,
         **kwargs,
     ) -> tuple[State, dict[str, Any]]:
         """Advance solution with adaptive timestep.
@@ -91,6 +92,7 @@ class AdaptivegSQGSolver:
             state: Current state
             forcing: Optional forcing function
             damping: Optional damping function
+            dt_max: Maximum allowed timestep (for reaching target times)
             **kwargs: Additional arguments
 
         Returns:
@@ -101,6 +103,10 @@ class AdaptivegSQGSolver:
 
         # Compute adaptive timestep
         dt, dt_diags = self.timestepper.compute_timestep(state, u, v, self.nu_p, self.p)
+
+        # Apply dt_max limit if provided
+        if dt_max is not None:
+            dt = min(dt, dt_max)
 
         # Store for potential retry
         state_backup = state.copy()
@@ -204,24 +210,24 @@ class AdaptivegSQGSolver:
             print(f"Evolving from t={state['time']} to t={t_final}")
 
         while current_state["time"] < t_final:
-            # Compute timestep (may be limited by t_final)
-            u, v = compute_velocity_from_theta(current_state["theta_hat"], self.grid, self.alpha)
-
-            dt_adaptive, _ = self.timestepper.compute_timestep(
-                current_state, u, v, self.nu_p, self.p
-            )
-
-            # Limit by remaining time
-            dt = min(dt_adaptive, t_final - current_state["time"])
+            # Compute maximum allowed timestep
+            dt_max = t_final - current_state["time"]
 
             # Also limit to not overshoot save time
             if save_interval is not None:
-                dt = min(dt, next_save_time - current_state["time"])
+                dt_max = min(dt_max, next_save_time - current_state["time"])
 
-            # Step
+            # Step with dt limit
             new_state, step_info = self.step(
-                current_state, forcing=forcing, damping=damping, **kwargs
+                current_state, forcing=forcing, damping=damping, dt_max=dt_max, **kwargs
             )
+
+            # Check if time is advancing
+            if new_state["time"] <= current_state["time"]:
+                raise RuntimeError(
+                    f"Time not advancing: dt={step_info['dt_used']}, "
+                    f"time={current_state['time']}"
+                )
 
             # Update state
             current_state = new_state
