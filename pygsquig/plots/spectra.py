@@ -63,7 +63,7 @@ def plot_energy_spectrum_with_analysis(
                 ax.loglog(k_ref, E_ref, "--", linewidth=1.5, label=label, alpha=0.7)
 
     # Fit and show inertial range if specified
-    measured_slope = None
+    measured_slope: float = 0.0
     if inertial_range:
         k_min, k_max = inertial_range
         mask = (k >= k_min) & (k <= k_max)
@@ -74,7 +74,8 @@ def plot_energy_spectrum_with_analysis(
             # Fit power law
             log_k = np.log(k_inertial)
             log_E = np.log(E_inertial + 1e-20)
-            measured_slope, intercept = np.polyfit(log_k, log_E, 1)
+            slope, intercept = np.polyfit(log_k, log_E, 1)
+            measured_slope = float(slope)
 
             # Plot fit
             E_fit = np.exp(intercept) * k_inertial**measured_slope
@@ -94,9 +95,9 @@ def plot_energy_spectrum_with_analysis(
     if output_path:
         fig.savefig(output_path, dpi=PlotStyle.DPI, bbox_inches="tight")
         plt.close(fig)
-        return None, float(measured_slope)
+        return None, measured_slope
 
-    return fig, float(measured_slope)
+    return fig, measured_slope
 
 
 def plot_spectrum_evolution(

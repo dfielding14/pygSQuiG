@@ -133,7 +133,7 @@ def optimize_memory_layout(N: int) -> dict[str, Any]:
     array_size_mb = total_elements * complex_size / (1024 * 1024)
 
     # Recommendations based on array size
-    recommendations = {
+    recommendations: dict[str, Any] = {
         "use_float32": array_size_mb > 500,  # Use float32 for large arrays (lowered threshold)
         "chunk_size": min(N, 512),  # Optimal chunk size for operations
         "prefetch": array_size_mb < 100,  # Prefetch small arrays
