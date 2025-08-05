@@ -1,0 +1,138 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "pygsquig"
+version = "0.1.0"
+description = "A Python/JAX solver for generalised Surface-Quasi-Geostrophic turbulence"
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "MIT"}
+authors = [
+    {name = "pygSQuiG Developers"},
+]
+keywords = ["turbulence", "fluid dynamics", "spectral methods", "JAX", "GPU"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Physics",
+]
+
+dependencies = [
+    "jax>=0.4.0",
+    "jaxlib>=0.4.0",
+    "numpy>=1.24.0",
+    "scipy>=1.10.0",
+    "h5py>=3.8.0",
+    "xarray>=2023.1.0",
+    "click>=8.1.0",
+    "pyyaml>=6.0",
+    "tqdm>=4.65.0",
+    "matplotlib>=3.6.0",
+]
+
+[project.optional-dependencies]
+gpu = [
+    "jax[cuda12_pip]>=0.4.0",
+]
+dev = [
+    "pytest>=7.2.0",
+    "pytest-cov>=4.0.0",
+    "pytest-xdist>=3.2.0",
+    "black[jupyter]>=23.1.0",
+    "ruff>=0.2.0",
+    "mypy>=1.0.0",
+    "pre-commit>=3.0.0",
+    "sphinx>=7.0.0",
+    "sphinx-rtd-theme>=1.2.0",
+    "myst-parser>=2.0.0",
+    "nbsphinx>=0.9.0",
+    "ipykernel>=6.20.0",
+    "jupyter>=1.0.0",
+    "types-PyYAML",
+    "types-tqdm",
+]
+
+[project.urls]
+Homepage = "https://github.com/yourusername/pygsquig"
+Documentation = "https://pygsquig.readthedocs.io"
+Repository = "https://github.com/yourusername/pygsquig"
+Issues = "https://github.com/yourusername/pygsquig/issues"
+
+[project.scripts]
+pygsquig-run = "pygsquig.scripts.run:main"
+pygsquig-analyse = "pygsquig.scripts.analyse:main"
+
+[tool.hatch.build.targets.sdist]
+exclude = [
+    "/.github",
+    "/docs",
+    "/tests",
+    "/examples",
+    ".gitignore",
+    ".pre-commit-config.yaml",
+    "CLAUDE.md",
+    "agent-*.md",
+    "COMM.md",
+]
+
+[tool.black]
+line-length = 99
+target-version = ["py39", "py310", "py311", "py312"]
+include = '\.pyi?$'
+
+[tool.ruff]
+line-length = 99
+target-version = "py39"
+
+[tool.ruff.lint]
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "N",  # pep8-naming
+    "UP", # pyupgrade
+    "B",  # flake8-bugbear
+    "SIM", # flake8-simplify
+]
+ignore = [
+    "E501",  # line too long (handled by black)
+    "E731",  # lambda assignment
+]
+
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_configs = true
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = [
+    "--cov=pygsquig",
+    "--cov-report=html",
+    "--cov-report=term",
+    "-v",
+]
+
+[tool.coverage.run]
+source = ["pygsquig"]
+omit = ["*/tests/*", "*/examples/*"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+]
